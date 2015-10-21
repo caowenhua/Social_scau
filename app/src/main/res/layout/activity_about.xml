@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+
+    <org.social.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_text="关于我们"
+        app:right_visible="false"
+        android:id="@+id/titlebar"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titlebar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlt"
+            >
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/img_logo"
+                android:src="@drawable/logo"
+                android:layout_marginTop="100dp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:id="@+id/tv_cwh"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text"
+                android:text="姓名：曹文华\n学号：201230690301"
+                android:layout_below="@+id/img_logo"
+                android:layout_marginTop="50dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:id="@+id/tv_cjwei"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text"
+                android:text="姓名：陈建伟\n学号：201230690302"
+                android:layout_below="@+id/tv_cwh"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:id="@+id/tv_cjwen"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text"
+                android:text="姓名：陈剑文\n学号：201230690303"
+                android:layout_below="@+id/tv_cjwei"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:id="@+id/tv_cjl"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text"
+                android:text="姓名：陈举龙\n学号：201230690304"
+                android:layout_below="@+id/tv_cjwen"
+                android:layout_marginTop="10dp"
+                />
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

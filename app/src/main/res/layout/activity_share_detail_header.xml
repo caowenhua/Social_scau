@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="10dp"
+    >
+
+    <org.social.widget.CircleImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_launcher"
+        android:id="@+id/img_head"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_name"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text"
+        android:singleLine="true"
+        android:maxLength="20"
+        android:text="name"
+        android:layout_toRightOf="@+id/img_head"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_time"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text_shadow"
+        android:singleLine="true"
+        android:text="2012.02.02"
+        android:layout_below="@+id/tv_name"
+        android:layout_toRightOf="@+id/img_head"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_content"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text_shadow"
+        android:text="content \ncontent"
+        android:layout_below="@+id/img_head"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/img_collection"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerInside"
+        android:padding="5dp"
+        android:src="@drawable/star_empty"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/flt"
+        android:layout_below="@+id/tv_content"
+        android:padding="10dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_single"
+            android:src="@drawable/buildings"
+            android:maxHeight="250dp"
+            android:scaleType="centerCrop"
+            />
+
+        <org.social.widget.NoScrollGridView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/grid_photo"
+            android:numColumns="3"
+            android:horizontalSpacing="2dp"
+            android:verticalSpacing="2dp"
+            android:scrollbars="none"
+            />
+    </FrameLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_c0"
+        android:layout_below="@+id/img_head"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_c0"
+        android:layout_below="@+id/flt"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_e5"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.social"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".application.SysApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar"
+        >
+
+	    <activity
+            android:name=".activity.TestActivity"
+            android:launchMode="singleTask"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AdminMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.EditShareActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.FillInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.GroundActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.PersonListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.PhotoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ShareDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ShareListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.TouristMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.UserMainActivity"
+            android:screenOrientation="portrait"/>
+
+
+    </application>
+</manifest>

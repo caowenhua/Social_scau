@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    >
+    
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_bg_f9_2_main_shadow"
+        android:textColor="@color/text"
+        android:textSize="@dimen/text"
+        android:text="取消"
+        android:id="@+id/btn_cancel"
+        android:layout_alignParentBottom="true"
+        android:padding="15dp"
+        />
+
+    <Button 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_bg_f9_2_main_shadow"
+        android:textColor="@color/main"
+        android:textSize="@dimen/text"
+        android:text="选择照片"
+        android:id="@+id/btn_choose"
+        android:padding="15dp"
+        android:layout_above="@+id/btn_cancel"
+        />
+    
+    <Button 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_bg_f9_2_main_shadow"
+        android:textColor="@color/main"
+        android:textSize="@dimen/text"
+        android:text="拍照"
+        android:id="@+id/btn_camera"
+        android:padding="15dp"
+        android:layout_above="@+id/btn_choose"
+        />
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_c0"
+        android:layout_above="@+id/btn_cancel"
+        />
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_c0"
+        android:layout_above="@+id/btn_choose"
+        />
+</RelativeLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+
+    <org.social.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_text="编辑分享"
+        android:id="@+id/titlebar"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titlebar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv1"
+                android:text="编辑内容"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_count"
+                android:text="0/300"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:textSize="@dimen/text"
+                android:textColor="@color/text"
+                android:id="@+id/edt_content"
+                android:layout_margin="20dp"
+                android:layout_below="@+id/tv1"
+                android:maxLines="7"
+                android:background="@drawable/bg_main_white_con"
+                android:gravity="left|top"
+                android:padding="10dp"
+                android:maxLength="300"
+                />
+
+            <org.social.widget.NoScrollGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/grid_photo"
+                android:layout_below="@+id/edt_content"
+                android:numColumns="3"
+                android:horizontalSpacing="2dp"
+                android:verticalSpacing="2dp"
+                android:scrollbars="none"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

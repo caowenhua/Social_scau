@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_bg_f9_2_e5"
+    android:padding="10dp"
+    >
+    <org.social.widget.CircleImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_launcher"
+        android:id="@+id/img_head"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_name"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="kao ge"
+        android:layout_toRightOf="@+id/img_head"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_content"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text"
+        android:ellipsize="end"
+        android:text="diao ni lao mu !!! \n this is comment \n do you see that >\n i am a rich guy !!\nthe most rich person in the world!!"
+        android:layout_toRightOf="@+id/img_head"
+        android:layout_below="@+id/img_head"
+        android:padding="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_time"
+        android:textSize="@dimen/text_s"
+        android:textColor="@color/text_shadow"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="2015.10.10"
+        android:layout_below="@+id/tv_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        />
+
+</RelativeLayout>

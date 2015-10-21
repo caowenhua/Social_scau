@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white" >#f9f9f9</color>
+    <color name="main" >#3f51b5</color>
+    <color name="main_deep" >#1a237e</color>
+    <color name="main_shadow" >#9fa8da</color>
+    <color name="background" >#e8eaf6</color>
+    <color name="blue" >#304ffe</color>
+    <color name="text" >#424242</color>
+    <color name="text_deep" >#212121</color>
+    <color name="text_shadow" >#909090</color>
+    <color name="green" >#00796b</color>
+    <color name="green_deep" >#004d40</color>
+    <color name="green_shadow" >#4db6ac</color>
+    <color name="red" >#e51c23</color>
+    <color name="red_deep" >#b0120a</color>
+    <color name="red_shadow" >#f36c60</color>
+    <color name="yellow" >#ffc107</color>
+    <color name="yellow_deep" >#ff6f00</color>
+    <color name="yellow_shadow" >#ffd54f</color>
+    <color name="col_e5">#e5e5e5</color>
+    <color name="col_c0">#c0c0c0</color>
+    <color name="gray" >#37474f</color>
+    <color name="gray_deep" >#263238</color>
+    <color name="gray_shadow" >#546e7a</color>
+
+</resources>

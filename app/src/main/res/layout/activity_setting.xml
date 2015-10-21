@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+
+    <org.social.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_text="设置"
+        app:right_visible="false"
+        android:id="@+id/titlebar"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_c0_f9_con"
+        android:layout_below="@+id/titlebar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/rlt"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textSize="@dimen/text_s"
+            android:textColor="@color/main"
+            android:id="@+id/tv"
+            android:layout_margin="10dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="关于我们"
+            android:textColor="@color/main"
+            android:textSize="@dimen/text"
+            android:background="@drawable/selector_bg_f9_2_e5"
+            android:layout_below="@+id/tv"
+            android:id="@+id/tv_about"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="拒绝分享"
+            android:textColor="@color/main"
+            android:textSize="@dimen/text"
+            android:background="@drawable/selector_bg_f9_2_e5"
+            android:layout_below="@+id/tv_about"
+            android:id="@+id/tv_share"
+            />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:id="@+id/img_switch"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/button_open"
+            android:layout_below="@+id/tv_about"
+            android:layout_marginRight="10dp"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="退出登录"
+        android:textColor="@color/main"
+        android:textSize="@dimen/text"
+        android:background="@drawable/selector_bg_c0_f9_2_c0_con"
+        android:layout_below="@+id/rlt"
+        android:id="@+id/tv_exit"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        />
+
+
+</RelativeLayout>

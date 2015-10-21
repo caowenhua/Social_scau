@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+
+    <org.social.widget.CircleImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_launcher"
+        android:id="@+id/img_head"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_name"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text"
+        android:singleLine="true"
+        android:maxLength="20"
+        android:text="chen jian wen"
+        android:layout_toRightOf="@+id/img_head"
+        android:layout_margin="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_time"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text_shadow"
+        android:singleLine="true"
+        android:text="2012.02.02"
+        android:layout_margin="20dp"
+        android:layout_alignParentRight="true"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_content"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text_deep"
+        android:text="i m a sb!!!!!\n\ni am prond of myself!"
+        android:layout_below="@+id/img_head"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/flt"
+        android:layout_below="@+id/tv_content"
+        android:padding="10dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_single"
+            android:src="@drawable/buildings"
+            android:maxHeight="250dp"
+            android:scaleType="centerCrop"
+            />
+
+        <org.social.widget.NoScrollGridView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/grid_photo"
+            android:numColumns="3"
+            android:horizontalSpacing="2dp"
+            android:verticalSpacing="2dp"
+            android:scrollbars="none"
+            />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/flt"
+        android:id="@+id/llt"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/rlt_like"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_like"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text"
+                android:paddingLeft="100dp"
+                android:gravity="center_vertical"
+                android:text="666"
+                />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="60dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/feed_button_like"
+                />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/col_c0"
+            />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/rlt_comment"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_comment"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text"
+                android:paddingLeft="100dp"
+                android:gravity="center_vertical"
+                android:text="1345"
+                />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="60dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/feed_button_comment"
+                />
+        </RelativeLayout>
+
+        <!--
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/col_c0"
+            />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/rlt_more"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_more"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text"
+                android:paddingLeft="45dp"
+                android:gravity="center_vertical"
+                android:text="11"
+                />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/feed_button_comment"
+                />
+        </RelativeLayout>
+        -->
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_c0"
+        android:layout_below="@+id/img_head"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_c0"
+        android:layout_below="@+id/flt"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_e5"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/col_e5"
+        android:layout_below="@+id/llt"
+        />
+    
+</RelativeLayout>

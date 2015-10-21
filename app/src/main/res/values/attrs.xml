@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="widget_title_attrs">
+        <attr name="center_text" format="string" />
+        <attr name="center_color" format="integer" />
+        <attr name="left_text" format="string" />
+        <attr name="left_img" format="integer" />
+        <attr name="left_color" format="integer" />
+        <attr name="right_text" format="string" />
+        <attr name="right_img" format="integer" />
+        <attr name="right_color" format="integer" />
+        <attr name="right_visible" format="boolean" />
+        <attr name="left_visible" format="boolean" />
+    </declare-styleable>
+
+    <!--
+        border_thickness         设置边框的宽度
+        border_inside_color     设置内边框的颜色
+        border_outside_color     设置外边框的颜色
+        内外边框如果只设置一个的话，则认为只显示一个边框。
+
+    -->
+    <declare-styleable name="RoundImageView">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="RefreshView">
+        <attr name="type" format="enum">
+            <enum name="sun" value="0" />
+            <enum name="jet" value="1" />
+        </attr>
+    </declare-styleable>
+
+</resources>

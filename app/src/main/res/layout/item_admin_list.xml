@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_bg_f9_2_e5"
+    android:padding="10dp"
+    >
+    <org.social.widget.CircleImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_launcher"
+        android:id="@+id/img_head"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_shut"
+        android:layout_alignParentRight="true"
+        android:padding="10dp"
+        android:background="@drawable/selector_bg_main_con"
+        android:textSize="@dimen/text"
+        android:textColor="@color/white"
+        android:text="shut up"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_name"
+        android:textSize="@dimen/text"
+        android:textColor="@color/text"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="chen jian wen"
+        android:layout_toRightOf="@+id/img_head"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        />
+
+</RelativeLayout>

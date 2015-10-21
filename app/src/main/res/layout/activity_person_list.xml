@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+
+    <org.social.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_text="列表"
+        app:right_visible="false"
+        android:id="@+id/titlebar"
+        />
+
+    <org.social.widget.PullToRefreshView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/v_pull"
+        android:layout_below="@+id/titlebar">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_list"
+            android:dividerHeight="20dp"
+            android:divider="@color/col_e5"
+            android:layout_marginTop="2dp"
+            android:background="@color/background"
+            />
+
+    </org.social.widget.PullToRefreshView>
+
+</RelativeLayout>

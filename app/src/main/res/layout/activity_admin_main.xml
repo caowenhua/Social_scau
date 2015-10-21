@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/rlt"
+        android:background="@color/gray"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_name"
+            android:textSize="@dimen/text"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:text="管理员"
+            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
+            />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/img_setting"
+            android:scaleType="centerInside"
+            android:padding="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/trayadd"
+            />
+
+    </RelativeLayout>
+
+    <org.social.widget.CircleImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/admin"
+        android:id="@+id/img_head"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/rlt"
+        android:layout_marginTop="20dp"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/edt_bg_big_con"
+        android:layout_below="@+id/img_head"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/edt_search"
+        android:singleLine="true"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/dock_search"
+        android:layout_below="@+id/img_head"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="35dp"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/edt_search"
+        android:id="@+id/lv_result"
+        android:dividerHeight="1px"
+        android:divider="@color/col_e5"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        />
+
+
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/pb_loading"
+        android:layout_below="@+id/edt_search"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        />
+
+</RelativeLayout>
