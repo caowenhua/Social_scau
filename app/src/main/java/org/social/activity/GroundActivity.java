@@ -1,9 +1,11 @@
 package org.social.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +21,7 @@ import org.social.base.BaseActivity;
 import org.social.base.BaseTask;
 import org.social.base.TaskListener;
 import org.social.response.ShareGroundResponse;
+import org.social.util.ExplosionUtils;
 import org.social.util.SpUtil;
 import org.social.widget.PullToRefreshView;
 
@@ -58,9 +61,10 @@ public class GroundActivity extends BaseActivity {
     ProgressBar pbLoading;
 
     private ShareListAdapter adapter;
-    private int type;
+    private int type;//0 点赞 1 评论 2新发
 
     private List<ShareGroundResponse.SharesEntity> shares;
+    private int screenWidth;
 
 
     @Override
@@ -75,8 +79,14 @@ public class GroundActivity extends BaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        screenWidth = wm.getDefaultDisplay().getWidth();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(screenWidth/3 ,ExplosionUtils.dp2Px(3));
+        vMoving.setLayoutParams(params);
         type = 0;
         shares = new ArrayList<>();
+        adapter = new ShareListAdapter(this, shares);
+        lvList.setAdapter(adapter);
         startLikeTask();
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -85,13 +95,59 @@ public class GroundActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                shares.clear();
+                if (type == 0) {
+                    if (s.length() == 0) {
+                        shares.addAll(likeResponse.getShares());
+                    } else {
+                        for (int i = 0; i < likeResponse.getShares().size(); i++) {
+                            if (likeResponse.getShares().get(i).getContent().contains(s.toString()) ||
+                                    likeResponse.getShares().get(i).getNickname().contains(s.toString())) {
+                                shares.add(likeResponse.getShares().get(i));
+                            }
+                        }
+                    }
+                } else if (type == 1) {
+                    if (s.length() == 0) {
+                        shares.addAll(commentResponse.getShares());
+                    } else {
+                        for (int i = 0; i < commentResponse.getShares().size(); i++) {
+                            if (commentResponse.getShares().get(i).getContent().contains(s.toString()) ||
+                                    commentResponse.getShares().get(i).getNickname().contains(s.toString())) {
+                                shares.add(commentResponse.getShares().get(i));
+                            }
+                        }
+                    }
+                } else if (type == 2) {
+                    if (s.length() == 0) {
+                        shares.addAll(newResponse.getShares());
+                    } else {
+                        for (int i = 0; i < newResponse.getShares().size(); i++) {
+                            if (newResponse.getShares().get(i).getContent().contains(s.toString()) ||
+                                    newResponse.getShares().get(i).getNickname().contains(s.toString())) {
+                                shares.add(newResponse.getShares().get(i));
+                            }
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
+
+        vPull.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                vPull.setRefreshing(true);
+                startAllTask();
+            }
+        });
+    }
+
+    private void startAllTask() {
     }
 
     @OnClick({R.id.img_back, R.id.tv_like, R.id.tv_comment, R.id.tv_new})
@@ -113,6 +169,7 @@ public class GroundActivity extends BaseActivity {
     }
 
     private void startNewTask() {
+        vMoving.animate().translationX(screenWidth*2/3).setDuration(200).start();
         if (newResponse != null) {
             GetNewShareTask task = new GetNewShareTask();
             task.setListener(taskListener);
@@ -126,6 +183,7 @@ public class GroundActivity extends BaseActivity {
     }
 
     private void startLikeTask() {
+        vMoving.animate().translationX(0.0f).setDuration(200).start();
         if (likeResponse != null) {
             GetLikeShareTask task = new GetLikeShareTask();
             task.setListener(taskListener);
@@ -138,6 +196,7 @@ public class GroundActivity extends BaseActivity {
     }
 
     private void startCommentTask() {
+        vMoving.animate().translationX(screenWidth/3).setDuration(200).start();
         if (commentResponse != null) {
             GetCommentShareTask task = new GetCommentShareTask();
             task.setListener(taskListener);
@@ -180,10 +239,23 @@ public class GroundActivity extends BaseActivity {
         }
     }
 
+    private class AllShareTask extends BaseTask {
+        @Override
+        protected Object doWorkInBackground(Object... params) {
+            Api api = new Api(getThis());
+            commentResponse = api.getList(SpUtil.getUserId(getThis()), 3);
+            likeResponse = api.getList(SpUtil.getUserId(getThis()), 2);
+            newResponse = api.getList(SpUtil.getUserId(getThis()), 1);
+            return null;
+        }
+    }
+
     private TaskListener taskListener = new TaskListener() {
         @Override
         public void onPreExecute(BaseTask task) {
             pbLoading.setVisibility(View.VISIBLE);
+            shares.clear();
+            adapter.notifyDataSetChanged();
         }
 
         @Override
@@ -191,7 +263,7 @@ public class GroundActivity extends BaseActivity {
             pbLoading.setVisibility(View.GONE);
             if(task instanceof GetCommentShareTask){
                 if(commentResponse.getStatus().equals("success")){
-
+                    startCommentTask();
                 }
                 else{
                     showToast(commentResponse.getMessage());
@@ -199,7 +271,7 @@ public class GroundActivity extends BaseActivity {
             }
             else if(task instanceof GetLikeShareTask){
                 if(likeResponse.getStatus().equals("success")){
-
+                    startLikeTask();
                 }
                 else{
                     showToast(likeResponse.getMessage());
@@ -207,10 +279,24 @@ public class GroundActivity extends BaseActivity {
             }
             else if(task instanceof GetNewShareTask){
                 if(newResponse.getStatus().equals("success")){
-
+                    startNewTask();
                 }
                 else{
                     showToast(newResponse.getMessage());
+                }
+            }
+            if(task instanceof AllShareTask){
+                if(likeResponse != null && newResponse != null && commentResponse != null){
+                    vPull.setRefreshing(false);
+                    if(type == 0){
+                        startLikeTask();
+                    }
+                    else if(type == 1){
+                        startCommentTask();
+                    }
+                    else{
+                        startNewTask();
+                    }
                 }
             }
         }

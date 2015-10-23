@@ -250,4 +250,14 @@ public class Api {
                 UserInfoResponse.class);
         return (UserInfoResponse) response;
     }
+
+    public ShareDetailResponse getShareById(int userId, int shareId){
+        String url = host + "share/getSharebyId";
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("userId", userId + ""));
+        params.add(new BasicNameValuePair("shareId", shareId + ""));
+        BaseResponse response = request(Method.post, url, params,
+                ShareDetailResponse.class);
+        return (ShareDetailResponse) response;
+    }
 }

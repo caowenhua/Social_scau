@@ -12,6 +12,9 @@ import org.social.base.BaseActivity;
 import org.social.widget.NoScrollGridView;
 import org.social.widget.TitleBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by caowenhua on 2015/10/13.
  */
@@ -21,6 +24,8 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
     private EditText edt_content;
     private TitleBar titleBar;
     private NoScrollGridView gridView;
+
+    private List<String> pathList;
 
     @Override
     protected int setLayout() {
@@ -37,6 +42,8 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        pathList = new ArrayList<>();
+        pathList.add("add");
         titleBar.left.setOnClickListener(this);
         titleBar.right.setOnClickListener(this);
 

@@ -8,7 +8,11 @@ import android.widget.TextView;
 
 import org.social.R;
 import org.social.adapter.CommentListAdapter;
+import org.social.api.Api;
 import org.social.base.BaseActivity;
+import org.social.base.BaseTask;
+import org.social.response.ShareDetailResponse;
+import org.social.util.SpUtil;
 import org.social.widget.ShareDetailHeader;
 import org.social.widget.TitleBar;
 
@@ -27,6 +31,8 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
     private ListView lv_list;
     private CommentListAdapter adapter;
     private ShareDetailHeader headerView;
+
+    private int shareId;
 
     @Override
     protected int setLayout() {
@@ -48,6 +54,10 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        getIntent().getIntExtra("shareId", -1);
+        if(shareId == -1){
+            finish();
+        }
         adapter = new CommentListAdapter(this);
         lv_list.addHeaderView(headerView);
 //        lv_list.setHeadView(headerView);
@@ -59,4 +69,15 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
 
     }
+
+    private ShareDetailResponse shareDetailResponse;
+    private class GetShareDetailTask extends BaseTask{
+        @Override
+        protected Object doWorkInBackground(Object... params) {
+            Api api = new Api(getThis());
+            shareDetailResponse = api.getShareById(SpUtil.getUserId(getThis()), shareId);
+            return null;
+        }
+    }
+
 }
