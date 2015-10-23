@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.social.R;
+
 import java.util.List;
 
 /**
@@ -49,7 +51,12 @@ public class GridPhotoAdapter extends BaseAdapter {
         else{
             img = (ImageView) convertView.getTag();
         }
-        ImageLoader.getInstance().displayImage(urls.get(position) ,img);
+        if(urls.get(position).equals("add")){
+            img.setImageResource(R.drawable.add_photo_plus);
+        }
+        else{
+            ImageLoader.getInstance().displayImage(urls.get(position) ,img);
+        }
         return convertView;
     }
 }
