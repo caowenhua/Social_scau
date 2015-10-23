@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:id="@+id/rlt_share"
     >
 
     <org.social.widget.CircleImageView
@@ -113,6 +114,7 @@
                 android:layout_marginLeft="60dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/feed_button_like"
+                android:id="@+id/img_like"
                 />
         </RelativeLayout>
 
