@@ -53,7 +53,8 @@ public class TouristMainActivity extends BaseActivity implements View.OnClickLis
         v_pull.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                v_pull.setRefreshing(true);
+                startGetShareTask();
             }
         });
 
@@ -106,6 +107,7 @@ public class TouristMainActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onPostExecute(BaseTask task, Object result) {
             if(task instanceof GetShareTask){
+                v_pull.setRefreshing(false);
                 if(allShareResponse.getStatus().equals("success")){
                     list.addAll(allShareResponse.getShares());
                     adapter.notifyDataSetChanged();

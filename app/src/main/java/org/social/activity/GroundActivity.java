@@ -83,6 +83,7 @@ public class GroundActivity extends BaseActivity {
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         screenWidth = wm.getDefaultDisplay().getWidth();
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(screenWidth/3 ,ExplosionUtils.dp2Px(3));
+        params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.llt);
         vMoving.setLayoutParams(params);
         type = 0;
         shares = new ArrayList<>();
@@ -99,34 +100,46 @@ public class GroundActivity extends BaseActivity {
                 shares.clear();
                 if (type == 0) {
                     if (s.length() == 0) {
-                        shares.addAll(likeResponse.getShares());
+                        if(likeResponse != null)
+                            shares.addAll(likeResponse.getShares());
                     } else {
-                        for (int i = 0; i < likeResponse.getShares().size(); i++) {
-                            if (likeResponse.getShares().get(i).getContent().contains(s.toString()) ||
-                                    likeResponse.getShares().get(i).getNickname().contains(s.toString())) {
-                                shares.add(likeResponse.getShares().get(i));
+                        if(likeResponse != null){
+                            for (int i = 0; i < likeResponse.getShares().size(); i++) {
+                                if (likeResponse.getShares().get(i).getContent().contains(s.toString()) ||
+                                        likeResponse.getShares().get(i).getNickname().contains(s.toString())) {
+                                    shares.add(likeResponse.getShares().get(i));
+                                }
                             }
                         }
                     }
                 } else if (type == 1) {
                     if (s.length() == 0) {
-                        shares.addAll(commentResponse.getShares());
+                        if(commentResponse != null){
+                            shares.addAll(commentResponse.getShares());
+                        }
+
                     } else {
-                        for (int i = 0; i < commentResponse.getShares().size(); i++) {
-                            if (commentResponse.getShares().get(i).getContent().contains(s.toString()) ||
-                                    commentResponse.getShares().get(i).getNickname().contains(s.toString())) {
-                                shares.add(commentResponse.getShares().get(i));
+                        if(commentResponse != null){
+                            for (int i = 0; i < commentResponse.getShares().size(); i++) {
+                                if (commentResponse.getShares().get(i).getContent().contains(s.toString()) ||
+                                        commentResponse.getShares().get(i).getNickname().contains(s.toString())) {
+                                    shares.add(commentResponse.getShares().get(i));
+                                }
                             }
                         }
+
                     }
                 } else if (type == 2) {
                     if (s.length() == 0) {
-                        shares.addAll(newResponse.getShares());
+                        if(newResponse != null)
+                            shares.addAll(newResponse.getShares());
                     } else {
-                        for (int i = 0; i < newResponse.getShares().size(); i++) {
-                            if (newResponse.getShares().get(i).getContent().contains(s.toString()) ||
-                                    newResponse.getShares().get(i).getNickname().contains(s.toString())) {
-                                shares.add(newResponse.getShares().get(i));
+                        if(newResponse != null){
+                            for (int i = 0; i < newResponse.getShares().size(); i++) {
+                                if (newResponse.getShares().get(i).getContent().contains(s.toString()) ||
+                                        newResponse.getShares().get(i).getNickname().contains(s.toString())) {
+                                    shares.add(newResponse.getShares().get(i));
+                                }
                             }
                         }
                     }
@@ -171,7 +184,7 @@ public class GroundActivity extends BaseActivity {
 
     private void startNewTask() {
         vMoving.animate().translationX(screenWidth*2/3).setDuration(200).start();
-        if (newResponse != null) {
+        if (newResponse == null) {
             GetNewShareTask task = new GetNewShareTask();
             task.setListener(taskListener);
             task.execute();
@@ -186,7 +199,7 @@ public class GroundActivity extends BaseActivity {
 
     private void startLikeTask() {
         vMoving.animate().translationX(0.0f).setDuration(200).start();
-        if (likeResponse != null) {
+        if (likeResponse == null) {
             GetLikeShareTask task = new GetLikeShareTask();
             task.setListener(taskListener);
             task.execute();
@@ -200,7 +213,7 @@ public class GroundActivity extends BaseActivity {
 
     private void startCommentTask() {
         vMoving.animate().translationX(screenWidth/3).setDuration(200).start();
-        if (commentResponse != null) {
+        if (commentResponse == null) {
             GetCommentShareTask task = new GetCommentShareTask();
             task.setListener(taskListener);
             task.execute();
