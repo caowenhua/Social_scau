@@ -58,9 +58,9 @@
                 android:padding="10dp"
                 android:maxLength="300"
                 />
-
-            <!-- <org.social.widget.NoScrollGridView -->
-            <GridView
+            <!-- <GridView -->
+            <!--
+            <org.social.widget.NoScrollGridView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/grid_photo"
@@ -72,6 +72,14 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 />
+            -->
+            <org.social.widget.NineGridlayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/grid_nine"
+                android:layout_below="@+id/edt_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
 
         </RelativeLayout>
     </ScrollView>

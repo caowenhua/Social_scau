@@ -1,6 +1,7 @@
 package org.social.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -44,26 +45,31 @@ public class GridPhotoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView img;
+        ViewHolder holder = null;
         if(convertView == null){
-            img = new ImageView(context);
-            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            convertView.setTag(img);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_grid_photo, null);
+            holder.img_photo = (ImageView) convertView.findViewById(R.id.img_photo);
+            convertView.setTag(holder);
         }
         else{
-            img = (ImageView) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
         if(urls.get(position).equals("add")){
-            img.setImageResource(R.drawable.add_photo_plus);
+            holder.img_photo.setImageResource(R.drawable.add_photo_plus);
         }
         else{
             if(urls.get(position).contains("http")){
-                ImageLoader.getInstance().displayImage(Api.IP+urls.get(position) ,img);
+                ImageLoader.getInstance().displayImage(Api.IP+urls.get(position) ,holder.img_photo);
             }
             else{
-                ImageLoader.getInstance().displayImage(ImageDownloader.Scheme.FILE.wrap(urls.get(position)), img);
+                ImageLoader.getInstance().displayImage(ImageDownloader.Scheme.FILE.wrap(urls.get(position)),
+                        holder.img_photo);
             }
         }
         return convertView;
+    }
+
+    class ViewHolder{
+        ImageView img_photo;
     }
 }

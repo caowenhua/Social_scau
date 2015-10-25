@@ -6,21 +6,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.lidroid.xutils.util.LogUtils;
-
 import org.social.R;
 import org.social.adapter.GridPhotoAdapter;
 import org.social.base.BaseActivity;
 import org.social.util.ExplosionUtils;
+import org.social.widget.NineGridlayout;
 import org.social.widget.TitleBar;
-import org.social.widget.dialog.OnButtonClickLister;
-import org.social.widget.dialog.TipTwoBtnDialog;
 
 import java.util.ArrayList;
 
@@ -33,7 +29,8 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
     private EditText edt_content;
     private TitleBar titleBar;
 //    private NoScrollGridView gridView;
-    private GridView gridView;
+//    private GridView gridView;
+    private NineGridlayout grid_nine;
 
     private ArrayList<String> pathList;
     private GridPhotoAdapter adapter;
@@ -48,7 +45,8 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
         tv_count = findViewByID(R.id.tv_count);
         edt_content = findViewByID(R.id.edt_content);
         titleBar = findViewByID(R.id.titlebar);
-        gridView = findViewByID(R.id.grid_photo);
+//        gridView = findViewByID(R.id.grid_photo);
+        grid_nine = findViewByID(R.id.grid_nine);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
         titleBar.right.setOnClickListener(this);
 
         adapter = new GridPhotoAdapter(this, pathList);
-        setGridViewHeight(gridView);
+//        setGridViewHeight(gridView);
 
         edt_content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,7 +67,6 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 tv_count.setText(s.length() + "/" + 300);
-                LogUtils.e(gridView.getWidth() + "--" + gridView.getHeight() + "--" + adapter.getCount());
             }
 
             @Override
@@ -77,27 +74,27 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if(pathList.get(position).equals("add")){
-                    Bundle bundle = new Bundle();
-                    bundle.putStringArrayList("path", pathList);
-                    startActivity(ChoosePhotoActivity.class, null, 50);
-                }
-                else{
-                    TipTwoBtnDialog dialog = new TipTwoBtnDialog(getThis(), "删除照片", "确认删除？"
-                            , "取消", "确定", null, new OnButtonClickLister() {
-                        @Override
-                        public void onClick() {
-                            pathList.remove(position);
-                            adapter.notifyDataSetChanged();
-                            setGridViewHeight(gridView);
-                        }
-                    });
-                }
-            }
-        });
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+//                if(pathList.get(position).equals("add")){
+//                    Bundle bundle = new Bundle();
+//                    bundle.putStringArrayList("path", pathList);
+//                    startActivity(ChoosePhotoActivity.class, null, 50);
+//                }
+//                else{
+//                    TipTwoBtnDialog dialog = new TipTwoBtnDialog(getThis(), "删除照片", "确认删除？"
+//                            , "取消", "确定", null, new OnButtonClickLister() {
+//                        @Override
+//                        public void onClick() {
+//                            pathList.remove(position);
+//                            adapter.notifyDataSetChanged();
+////                            setGridViewHeight(gridView);
+//                        }
+//                    });
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -119,12 +116,12 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
                 pathList.clear();
                 pathList.addAll(data.getStringArrayListExtra("path"));
                 adapter.notifyDataSetChanged();
-                setGridViewHeight(gridView);
+//                setGridViewHeight(gridView);
             }
             else if(data.getStringExtra("camera") != null){
                 pathList.add(data.getStringExtra("camera"));
                 adapter.notifyDataSetChanged();
-                setGridViewHeight(gridView);
+//                setGridViewHeight(gridView);
             }
         }
     }
