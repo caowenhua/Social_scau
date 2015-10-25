@@ -42,13 +42,13 @@ public class SpUtil {
     }
 
     public static int getUserId(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("parameters",
+        SharedPreferences preferences = context.getSharedPreferences("params",
                 Context.MODE_PRIVATE);
         return preferences.getInt("UserId", -1);
     }
 
     public static void setUserId(Context context, int userId){
-        SharedPreferences preferences = context.getSharedPreferences("parameters",
+        SharedPreferences preferences = context.getSharedPreferences("params",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("UserId", userId);
@@ -56,7 +56,9 @@ public class SpUtil {
     }
 
     public static void exitLogin(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("parameters",
+//        setIsUser(context, false);
+//        setIsAdmin(context, false);
+        SharedPreferences preferences = context.getSharedPreferences("params",
                 Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.remove("UserId");

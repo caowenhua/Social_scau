@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.lidroid.xutils.util.LogUtils;
+
 import org.social.R;
 import org.social.adapter.PersonListAdapter;
 import org.social.api.Api;
@@ -54,12 +56,13 @@ public class PersonListActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        type = FAN;
+//        type = FAN;
         type = getIntent().getStringExtra(TYPE);
+        LogUtils.e(type);
         userId = getIntent().getIntExtra("userId", 0);
         titleBar.left.setOnClickListener(this);
         adapter = new PersonListAdapter(this);
-        if(type == FAN){
+        if(type.equals(FAN)){
             titleBar.setCenterText("粉丝");
             fanList = new ArrayList<>();
             adapter.setFanList(fanList);

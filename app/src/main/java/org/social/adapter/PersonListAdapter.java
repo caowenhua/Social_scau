@@ -89,7 +89,7 @@ public class PersonListAdapter extends BaseAdapter {
         if(type == 0){
             holder.tv_name.setText(fanList.get(position).getNickname());
             holder.tv_sign.setText(fanList.get(position).getSignature());
-            ImageLoader.getInstance().displayImage(fanList.get(position).getAvatar(), holder.img_head);
+            ImageLoader.getInstance().displayImage(Api.IP+fanList.get(position).getAvatar(), holder.img_head);
             if(fanList.get(position).isFollow()){
                 holder.btn_follow.setText("followed");
             }
@@ -100,7 +100,7 @@ public class PersonListAdapter extends BaseAdapter {
         else{
             holder.tv_name.setText(followList.get(position).getNickname());
             holder.tv_sign.setText(followList.get(position).getSignature());
-            ImageLoader.getInstance().displayImage(followList.get(position).getAvatar(), holder.img_head);
+            ImageLoader.getInstance().displayImage(Api.IP+followList.get(position).getAvatar(), holder.img_head);
             if(followList.get(position).isAttention()){
                 holder.btn_follow.setText("followed");
             }

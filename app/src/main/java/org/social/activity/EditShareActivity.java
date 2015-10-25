@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.lidroid.xutils.util.LogUtils;
 
 import org.social.R;
 import org.social.adapter.GridPhotoAdapter;
 import org.social.base.BaseActivity;
-import org.social.widget.NoScrollGridView;
+import org.social.util.ExplosionUtils;
 import org.social.widget.TitleBar;
 import org.social.widget.dialog.OnButtonClickLister;
 import org.social.widget.dialog.TipTwoBtnDialog;
@@ -27,7 +32,8 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_count;
     private EditText edt_content;
     private TitleBar titleBar;
-    private NoScrollGridView gridView;
+//    private NoScrollGridView gridView;
+    private GridView gridView;
 
     private ArrayList<String> pathList;
     private GridPhotoAdapter adapter;
@@ -53,6 +59,7 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
         titleBar.right.setOnClickListener(this);
 
         adapter = new GridPhotoAdapter(this, pathList);
+        setGridViewHeight(gridView);
 
         edt_content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -62,6 +69,7 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 tv_count.setText(s.length() + "/" + 300);
+                LogUtils.e(gridView.getWidth() + "--" + gridView.getHeight() + "--" + adapter.getCount());
             }
 
             @Override
@@ -84,6 +92,7 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
                         public void onClick() {
                             pathList.remove(position);
                             adapter.notifyDataSetChanged();
+                            setGridViewHeight(gridView);
                         }
                     });
                 }
@@ -110,11 +119,31 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
                 pathList.clear();
                 pathList.addAll(data.getStringArrayListExtra("path"));
                 adapter.notifyDataSetChanged();
+                setGridViewHeight(gridView);
             }
             else if(data.getStringExtra("camera") != null){
                 pathList.add(data.getStringExtra("camera"));
                 adapter.notifyDataSetChanged();
+                setGridViewHeight(gridView);
             }
         }
+    }
+
+    public void setGridViewHeight(GridView grid) {
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = grid.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, grid);
+            listItem.measure(0, 0); // 计算子项View 的宽高
+            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+        }
+
+        ViewGroup.LayoutParams params = grid.getLayoutParams();
+        params.height = totalHeight + (ExplosionUtils.dp2Px(2) * (listAdapter.getCount() - 1));
+        grid.setLayoutParams(params);
     }
 }

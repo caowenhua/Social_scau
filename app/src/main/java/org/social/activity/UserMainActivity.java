@@ -96,7 +96,9 @@ public class UserMainActivity extends BaseActivity implements View.OnClickListen
                 startActivity(SettingActivity.class, null, 0);
                 break;
             case R.id.img_me:
-                startActivity(UserInfoActivity.class, null, 0);
+                Bundle bundle = new Bundle();
+                bundle.putInt("userId", SpUtil.getUserId(getThis()));
+                startActivity(UserInfoActivity.class, bundle, 0);
                 break;
         }
     }

@@ -92,7 +92,7 @@ public class ShareDetailHeader extends RelativeLayout implements View.OnClickLis
 
     public void setData(ShareDetailResponse.ShareEntity entity){
         this.entity = entity;
-        ImageLoader.getInstance().displayImage(entity.getAvatar(), img_head);
+        ImageLoader.getInstance().displayImage(Api.IP+entity.getAvatar(), img_head);
         tv_content.setText(entity.getContent());
         tv_time.setText(DateUtil.getDayByTime(entity.getShareTime()));
         tv_name.setText(entity.getNickname());
@@ -106,7 +106,7 @@ public class ShareDetailHeader extends RelativeLayout implements View.OnClickLis
         else if(entity.getImgList().size() > 0){
             img_single.setVisibility(VISIBLE);
             grid_photo.setVisibility(GONE);
-            ImageLoader.getInstance().displayImage(entity.getImgList().get(0), img_single);
+            ImageLoader.getInstance().displayImage(Api.IP+entity.getImgList().get(0), img_single);
             img_single.setOnClickListener(this);
         }
         if(entity.isCollect()){

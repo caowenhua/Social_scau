@@ -59,7 +59,8 @@
                 android:maxLength="300"
                 />
 
-            <org.social.widget.NoScrollGridView
+            <!-- <org.social.widget.NoScrollGridView -->
+            <GridView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/grid_photo"

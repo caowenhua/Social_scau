@@ -7,8 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 import org.social.R;
+import org.social.api.Api;
 
 import java.util.List;
 
@@ -55,7 +57,12 @@ public class GridPhotoAdapter extends BaseAdapter {
             img.setImageResource(R.drawable.add_photo_plus);
         }
         else{
-            ImageLoader.getInstance().displayImage(urls.get(position) ,img);
+            if(urls.get(position).contains("http")){
+                ImageLoader.getInstance().displayImage(Api.IP+urls.get(position) ,img);
+            }
+            else{
+                ImageLoader.getInstance().displayImage(ImageDownloader.Scheme.FILE.wrap(urls.get(position)), img);
+            }
         }
         return convertView;
     }

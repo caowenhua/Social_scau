@@ -2,6 +2,7 @@ package org.social.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -13,11 +14,14 @@ import org.social.api.Api;
 import org.social.base.BaseActivity;
 import org.social.base.BaseTask;
 import org.social.base.TaskListener;
+import org.social.response.BaseResponse;
 import org.social.response.ShareDetailResponse;
 import org.social.util.SpUtil;
 import org.social.widget.ShareDetailHeader;
 import org.social.widget.TitleBar;
+import org.social.widget.dialog.EditDialog;
 import org.social.widget.dialog.LoadingDialog;
+import org.social.widget.dialog.OnEditFinishListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +29,7 @@ import java.util.List;
 /**
  * Created by caowenhua on 2015/10/14.
  */
-public class ShareDetailActivity extends BaseActivity implements View.OnClickListener{
+public class ShareDetailActivity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
 
     private TitleBar titleBar;
     private TextView tv_like;
@@ -85,10 +89,47 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.rlt_like:
+                shareDetailResponse.getShare().setIsLike(!shareDetailResponse.getShare().isLike());
+                refreshLikeImg();
+                startLikeTask();
                 break;
             case R.id.rlt_comment:
+                EditDialog editDialog = new EditDialog(getThis(), "请输入评论内容", "取消", "确定", null,
+                        new OnEditFinishListener() {
+                            @Override
+                            public void onFinish(String content) {
+                                if(content != null && content.length() > 0){
+                                    startCommentTask(content);
+                                }
+                            }
+                        });
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        EditDialog editDialog = new EditDialog(getThis(), "请输入评论内容", "取消", "确定", null,
+                new OnEditFinishListener() {
+                    @Override
+                    public void onFinish(String content) {
+                        if(content != null && content.length() > 0){
+                            startCommentTask("回复 " + commentList.get(position).getUserName() + " :\\n" + content);
+                        }
+                    }
+                });
+    }
+
+    private void startCommentTask(String comment){
+        CommentTask task = new CommentTask(comment);
+        task.setListener(taskListener);
+        task.execute();
+    }
+
+    private void startLikeTask(){
+        LikeTask task = new LikeTask();
+        task.setListener(taskListener);
+        task.execute();
     }
 
     private void startGetDetailTask(){
@@ -98,6 +139,7 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private ShareDetailResponse shareDetailResponse;
+
     private class GetShareDetailTask extends BaseTask{
         @Override
         protected Object doWorkInBackground(Object... params) {
@@ -107,13 +149,41 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    private BaseResponse likeResponse;
+    private class LikeTask extends BaseTask{
+        @Override
+        protected Object doWorkInBackground(Object... params) {
+            Api api = new Api(getThis());
+            likeResponse = api.like(SpUtil.getUserId(getThis()), shareId, shareDetailResponse.getShare().isLike());
+            return null;
+        }
+    }
+
+    private BaseResponse commentResponse;
+    private class CommentTask extends BaseTask{
+        private String content;
+        public CommentTask(String content) {
+            this.content = content;
+        }
+
+        @Override
+        protected Object doWorkInBackground(Object... params) {
+            Api api = new Api(getThis());
+            commentResponse = api.comment(SpUtil.getUserId(getThis()), shareId, content);
+            return null;
+        }
+    }
+
+
     private TaskListener taskListener = new TaskListener() {
         @Override
         public void onPreExecute(BaseTask task) {
             if(task instanceof GetShareDetailTask){
                 loadingDialog = new LoadingDialog(getThis(), "正在加载..");
             }
-
+            else if(task instanceof CommentTask){
+                loadingDialog = new LoadingDialog(getThis(), "正在评论..");
+            }
         }
 
         @Override
@@ -128,15 +198,27 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
                     adapter.notifyDataSetChanged();
                     rlt_comment.setOnClickListener(ShareDetailActivity.this);
                     rlt_like.setOnClickListener(ShareDetailActivity.this);
-                    if(shareDetailResponse.getShare().isLike()){
-                        img_like.setImageResource(R.drawable.feed_button_like_active);
-                    }
-                    else{
-                        img_like.setImageResource(R.drawable.feed_button_like);
-                    }
+                    refreshLikeImg();
                 }
                 else{
                     showToast(shareDetailResponse.getMessage());
+                }
+            }
+            else if(task instanceof LikeTask){
+                if(!likeResponse.getStatus().equals("success")){
+                    shareDetailResponse.getShare().setIsLike(!shareDetailResponse.getShare().isLike());
+                    refreshLikeImg();
+                    showToast(likeResponse.getMessage());
+                }
+            }
+            else if(task instanceof CommentTask){
+                loadingDialog.dismiss();
+                if(commentResponse.getStatus().equals("success")){
+                    showToast("评论成功");
+                    finish();
+                }
+                else{
+                    showToast(commentResponse.getMessage());
                 }
             }
         }
@@ -151,4 +233,13 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
 
         }
     };
+
+    private void refreshLikeImg() {
+        if(shareDetailResponse.getShare().isLike()){
+            img_like.setImageResource(R.drawable.feed_button_like_active);
+        }
+        else{
+            img_like.setImageResource(R.drawable.feed_button_like);
+        }
+    }
 }

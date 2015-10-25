@@ -38,6 +38,33 @@ public class UserInfoResponse extends BaseResponse {
         private String phone;
         private String email;
         private String avatar;
+        private int fansNum;
+        private int followNum;
+        private boolean isFollow;
+
+        public boolean isFollow() {
+            return isFollow;
+        }
+
+        public void setIsFollow(boolean isFollow) {
+            this.isFollow = isFollow;
+        }
+
+        public int getFansNum() {
+            return fansNum;
+        }
+
+        public void setFansNum(int fansNum) {
+            this.fansNum = fansNum;
+        }
+
+        public int getFollowNum() {
+            return followNum;
+        }
+
+        public void setFollowNum(int followNum) {
+            this.followNum = followNum;
+        }
 
         public String getNickname() {
             return nickname;
