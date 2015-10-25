@@ -21,6 +21,7 @@ import org.social.base.BaseActivity;
 import org.social.base.BaseTask;
 import org.social.base.TaskListener;
 import org.social.response.ShareGroundResponse;
+import org.social.response.SharesEntity;
 import org.social.util.ExplosionUtils;
 import org.social.util.SpUtil;
 import org.social.widget.PullToRefreshView;
@@ -63,7 +64,7 @@ public class GroundActivity extends BaseActivity {
     private ShareListAdapter adapter;
     private int type;//0 点赞 1 评论 2新发
 
-    private List<ShareGroundResponse.SharesEntity> shares;
+    private List<SharesEntity> shares;
     private int screenWidth;
 
 
@@ -177,7 +178,8 @@ public class GroundActivity extends BaseActivity {
         }
         else{
             shares.clear();
-            shares.addAll(newResponse.getShares());
+            if(newResponse.getShares() != null)
+                shares.addAll(newResponse.getShares());
             adapter.notifyDataSetChanged();
         }
     }
@@ -190,7 +192,8 @@ public class GroundActivity extends BaseActivity {
             task.execute();
         }else{
             shares.clear();
-            shares.addAll(likeResponse.getShares());
+            if(likeResponse.getShares() != null)
+                shares.addAll(likeResponse.getShares());
             adapter.notifyDataSetChanged();
         }
     }
@@ -203,7 +206,8 @@ public class GroundActivity extends BaseActivity {
             task.execute();
         }else{
             shares.clear();
-            shares.addAll(commentResponse.getShares());
+            if(commentResponse.getShares() != null)
+                shares.addAll(commentResponse.getShares());
             adapter.notifyDataSetChanged();
         }
     }

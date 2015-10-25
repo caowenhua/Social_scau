@@ -22,6 +22,7 @@ import org.social.base.BaseTask;
 import org.social.base.TaskListener;
 import org.social.response.BaseResponse;
 import org.social.response.ShareGroundResponse;
+import org.social.response.SharesEntity;
 import org.social.util.DateUtil;
 import org.social.util.SpUtil;
 import org.social.widget.CircleImageView;
@@ -37,9 +38,9 @@ import java.util.List;
  */
 public class ShareListAdapter extends BaseAdapter {
     private Context context;
-    private List<ShareGroundResponse.SharesEntity> list;
+    private List<SharesEntity> list;
 
-    public ShareListAdapter(Context context, List<ShareGroundResponse.SharesEntity> list) {
+    public ShareListAdapter(Context context, List<SharesEntity> list) {
         this.context = context;
         this.list = list;
     }

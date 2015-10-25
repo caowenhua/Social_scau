@@ -16,7 +16,7 @@
         >
 
 	    <activity
-            android:name=".activity.TestActivity"
+            android:name=".activity.WelcomeActivity"
             android:launchMode="singleTask"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -32,6 +32,9 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.AdminMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ChoosePhotoActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.EditShareActivity"

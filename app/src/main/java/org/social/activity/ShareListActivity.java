@@ -8,8 +8,12 @@ import android.widget.ListView;
 import org.social.R;
 import org.social.adapter.ShareListAdapter;
 import org.social.base.BaseActivity;
+import org.social.response.SharesEntity;
 import org.social.widget.PullToRefreshView;
 import org.social.widget.TitleBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by caowenhua on 2015/10/14.
@@ -20,6 +24,7 @@ public class ShareListActivity extends BaseActivity implements View.OnClickListe
     private ListView lv_list;
     private PullToRefreshView v_pull;
     private ShareListAdapter adapter;
+    private List<SharesEntity> list;
 
     @Override
     protected int setLayout() {
@@ -36,6 +41,7 @@ public class ShareListActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initData(Bundle savedInstanceState) {
         titleBar.left.setOnClickListener(this);
+        list = new ArrayList<>();
 
         v_pull.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
@@ -44,7 +50,7 @@ public class ShareListActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-        adapter = new ShareListAdapter(this);
+        adapter = new ShareListAdapter(this, list);
         lv_list.setAdapter(adapter);
 
         lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

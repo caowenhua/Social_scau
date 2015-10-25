@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class Api {
     private Context context;
-    private String host = "http://115.28.163.181:8080/api/";
+    private String host = "http://192.168.123.1:8080/api/";
     private HttpClient client;
 
     public Api(Context context) {
@@ -259,5 +259,16 @@ public class Api {
         BaseResponse response = request(Method.post, url, params,
                 ShareDetailResponse.class);
         return (ShareDetailResponse) response;
+    }
+
+    public BaseResponse follow(int userId,int useUserId, boolean isFollow){
+        String url = host + "user/attention";
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("userId", userId + ""));
+        params.add(new BasicNameValuePair("useUserId", useUserId + ""));
+        params.add(new BasicNameValuePair("isFollow", isFollow + ""));
+        BaseResponse response = request(Method.post, url, params,
+                BaseResponse.class);
+        return response;
     }
 }

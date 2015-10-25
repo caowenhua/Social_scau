@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.social.R;
+import org.social.application.SysApplication;
 import org.social.base.BaseActivity;
 import org.social.util.SpUtil;
 import org.social.widget.TitleBar;
@@ -65,6 +66,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.tv_exit:
+                SpUtil.exitLogin(getThis());
+                startActivity(LoginActivity.class, null, 0);
+                SysApplication.getInstance().cleanBottom();
+                finish();
                 break;
             case R.id.tv_about:
                 startActivity(AboutActivity.class, null, 0);

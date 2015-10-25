@@ -160,10 +160,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
             else if(task instanceof LoginTask){
                 if(loginResponse.getStatus().equals("success")){
-                    SpUtil.setUserId(getThis(), signInResponse.getUserId());
-                    startActivity(UserMainActivity.class, null, 0);
-                    SysApplication.getInstance().cleanBottom();
-                    finish();
+                    if(loginResponse.getUserId() == 0){
+                        SpUtil.setIsAdmin(getThis(), true);
+                        startActivity(TouristMainActivity.class, null, 0);
+                        SysApplication.getInstance().cleanBottom();
+                        finish();
+                    }
+                    else{
+                        SpUtil.setIsUser(getThis(), true);
+                        SpUtil.setUserId(getThis(), loginResponse.getUserId());
+                        startActivity(UserMainActivity.class, null, 0);
+                        SysApplication.getInstance().cleanBottom();
+                        finish();
+                    }
                 }
                 else{
                     showToast(loginResponse.getMessage());

@@ -164,10 +164,12 @@ public class PersonListAdapter extends BaseAdapter {
         protected Object doWorkInBackground(Object... params) {
             Api api = new Api(context);
             if(type == 0){
-                response = api.
+                response = api.follow(SpUtil.getUserId(context), fanList.get(position).getUserId(),
+                        fanList.get(position).isFollow());
             }
             else{
-                response = api.
+                response = api.follow(SpUtil.getUserId(context), followList.get(position).getUserId(),
+                        followList.get(position).isAttention());
             }
             return null;
         }

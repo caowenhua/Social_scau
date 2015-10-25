@@ -1,5 +1,6 @@
 package org.social.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -54,4 +55,14 @@ public class SpUtil {
         editor.commit();
     }
 
+    public static void exitLogin(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("parameters",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("UserId");
+        editor.remove("isUser");
+        editor.remove("isAdmin");
+        editor.remove("isRejectShared");
+        editor.commit();
+    }
 }
