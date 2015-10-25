@@ -36,7 +36,7 @@ public class WelcomeActivity extends BaseActivity {
                 else{
                     startActivity(TouristMainActivity.class, null , 0);
                 }
-
+            finish();
             }
         }, 1000);
     }

@@ -149,6 +149,8 @@ public class AdminListAdapter extends BaseAdapter {
                                 userListList.get(changeTask.getPosition()).getIsShare());
                     }
                     notifyDataSetChanged();
+                }
+                else{
                     Toast.makeText(context, changeTask.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

@@ -10,16 +10,21 @@ import android.widget.TextView;
 
 import org.social.R;
 import org.social.activity.UserInfoActivity;
+import org.social.response.ShareDetailResponse;
 import org.social.widget.CircleImageView;
+
+import java.util.List;
 
 /**
  * Created by caowenhua on 2015/10/14.
  */
 public class CommentListAdapter extends BaseAdapter {
     private Context context;
+    private List<ShareDetailResponse.ShareEntity.CommentsEntity> comments;
 
-    public CommentListAdapter(Context context) {
+    public CommentListAdapter(Context context, List<ShareDetailResponse.ShareEntity.CommentsEntity> comments) {
         this.context = context;
+        this.comments = comments;
     }
 
     @Override

@@ -45,6 +45,7 @@
                 android:layout_marginLeft="60dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/feed_button_like"
+                android:id="@+id/img_like"
                 />
         </RelativeLayout>
 
