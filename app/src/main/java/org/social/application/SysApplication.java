@@ -3,7 +3,6 @@ package org.social.application;
 import android.app.Activity;
 import android.app.Application;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -74,7 +73,6 @@ public class SysApplication extends Application {
                         .tasksProcessingOrder(QueueProcessingType.LIFO)
                         .discCacheFileCount(200)
                                 // 缓存的文件数量
-                        .discCache(new UnlimitedDiscCache(cacheDir))
                                 // 自定义缓存路径
                                 // .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
                         .defaultDisplayImageOptions(options)

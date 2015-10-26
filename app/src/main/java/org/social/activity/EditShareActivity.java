@@ -5,16 +5,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import org.social.R;
-import org.social.adapter.GridPhotoAdapter;
 import org.social.base.BaseActivity;
-import org.social.util.ExplosionUtils;
 import org.social.widget.NineGridlayout;
 import org.social.widget.TitleBar;
 
@@ -33,7 +28,6 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
     private NineGridlayout grid_nine;
 
     private ArrayList<String> pathList;
-    private GridPhotoAdapter adapter;
 
     @Override
     protected int setLayout() {
@@ -56,7 +50,9 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
         titleBar.left.setOnClickListener(this);
         titleBar.right.setOnClickListener(this);
 
-        adapter = new GridPhotoAdapter(this, pathList);
+        grid_nine.setImagesData(pathList);
+
+//        adapter = new GridPhotoAdapter(this, pathList);
 //        setGridViewHeight(gridView);
 
         edt_content.addTextChangedListener(new TextWatcher() {
@@ -115,32 +111,30 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
             if(data.getStringArrayListExtra("path") != null){
                 pathList.clear();
                 pathList.addAll(data.getStringArrayListExtra("path"));
-                adapter.notifyDataSetChanged();
-//                setGridViewHeight(gridView);
+                addPlus();
+                grid_nine.setImagesData(pathList);
             }
             else if(data.getStringExtra("camera") != null){
                 pathList.add(data.getStringExtra("camera"));
-                adapter.notifyDataSetChanged();
-//                setGridViewHeight(gridView);
+                addPlus();
+                grid_nine.setImagesData(pathList);
             }
         }
     }
 
-    public void setGridViewHeight(GridView grid) {
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = grid.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-        int totalHeight = 0;
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, grid);
-            listItem.measure(0, 0); // 计算子项View 的宽高
-            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
-        }
 
-        ViewGroup.LayoutParams params = grid.getLayoutParams();
-        params.height = totalHeight + (ExplosionUtils.dp2Px(2) * (listAdapter.getCount() - 1));
-        grid.setLayoutParams(params);
+    public ArrayList<String> getPathList(){
+        for (int i=0; i < pathList.size() ;i++){
+            if(pathList.get(i).equals("add")){
+                pathList.remove(i);
+            }
+        }
+        return pathList;
+    }
+
+    private void addPlus(){
+        if(pathList.size() < 9){
+            pathList.add("add");
+        }
     }
 }

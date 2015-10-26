@@ -62,7 +62,9 @@ public class ChoosePhotoActivity extends BaseActivity implements AdapterView.OnI
         allList.add("camera");
         adapter = new ChoosePhotoAdapter(selectedList, allList, this);
         gv_photo.setAdapter(adapter);
+        gv_photo.setOnItemClickListener(this);
         getLoaderManager().initLoader(0, null, loaderCallbacks);
+        setRightText();
     }
 
     @Override
