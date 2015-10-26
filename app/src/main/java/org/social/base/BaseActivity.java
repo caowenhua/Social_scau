@@ -3,6 +3,7 @@ package org.social.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -94,5 +95,9 @@ public abstract class BaseActivity extends Activity {
 	
 	protected void showToastLong(String text){
 		Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+	}
+
+	protected void showLog(String text){
+		Log.e(getClass().getName(), text);
 	}
 }
