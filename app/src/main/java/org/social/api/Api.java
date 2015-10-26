@@ -18,16 +18,19 @@ import org.social.response.UserInfoResponse;
 import org.social.response.UserListResponse;
 import org.social.util.JsonUtils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by caowenhua on 2015/10/12.
  */
 public class Api {
+    public static String IP = "http://192.168.123.1:8080";
     private Context context;
-    private String host = "http://115.28.163.181:8080/api/";
+    private String host = "http://192.168.123.1:8080/Share/";
     private HttpClient client;
 
     public Api(Context context) {
@@ -56,17 +59,17 @@ public class Api {
         try {
             response = (BaseResponse) clz.newInstance();
             Response s = null;
-            Log.d("chat to url", url);
+            Log.e("chat to url", url);
             if (Method.post == method) {
-                Map<String, String> map = new HashMap<String, String>();
-                for (int i = 0; i < params.size(); i++) {
-                    map.put(params.get(i).getName(), params.get(i).getValue());
-                }
+//                Map<String, String> map = new HashMap<String, String>();
+//                for (int i = 0; i < params.size(); i++) {
+//                    map.put(params.get(i).getName(), params.get(i).getValue());
+//                }
                 s = client.post(url, params); //
             } else { // RequeseMethod.get == method
                 s = client.get(url, null); //
             }
-            Log.d("chat for result", s.asString());
+            Log.e("chat for result", s.asString());
             if (JsonUtils.isGoodJson(s.asString())) {
                 // JSONObject json = new JSONObject(s.asString());//ת��Ϊjson��ʽ
                 response = (BaseResponse) JsonUtils.toBean(s.asString(), clz);
@@ -242,10 +245,11 @@ public class Api {
         return (FollowListResponse) response;
     }
 
-    public UserInfoResponse information(int userId){
+    public UserInfoResponse information(int userId, int useUserId){
         String url = host + "user/information";
         ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
         params.add(new BasicNameValuePair("userId", userId + ""));
+        params.add(new BasicNameValuePair("useUserId", useUserId + ""));
         BaseResponse response = request(Method.post, url, params,
                 UserInfoResponse.class);
         return (UserInfoResponse) response;
@@ -259,5 +263,48 @@ public class Api {
         BaseResponse response = request(Method.post, url, params,
                 ShareDetailResponse.class);
         return (ShareDetailResponse) response;
+    }
+
+    public BaseResponse follow(int userId,int useUserId, boolean isFollow){
+        String url = host + "user/attention";
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("userId", userId + ""));
+        params.add(new BasicNameValuePair("useUserId", useUserId + ""));
+        params.add(new BasicNameValuePair("isFollow", isFollow + ""));
+        BaseResponse response = request(Method.post, url, params,
+                BaseResponse.class);
+        return response;
+    }
+
+    public BaseResponse changeInformation(int userId, int gender, String name,
+           String sign, String phone, String mail){
+        String url = host + "user/changeInformation1";
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("userId", userId + ""));
+        params.add(new BasicNameValuePair("sex", gender + ""));
+        params.add(new BasicNameValuePair("nickname", name));
+        params.add(new BasicNameValuePair("signature", sign));
+        params.add(new BasicNameValuePair("phone", phone));
+        params.add(new BasicNameValuePair("email", mail));
+        BaseResponse response = request(Method.post, url, params,
+                BaseResponse.class);
+        return response;
+    }
+
+
+    private static String readFileContent(String fileName) throws IOException {
+        File file = new File(fileName);
+        BufferedReader bf = new BufferedReader(new FileReader(file));
+        String content = "";
+        StringBuilder sb = new StringBuilder();
+        while(content != null){
+            content = bf.readLine();
+            if(content == null){
+                break;
+            }
+            sb.append(content.trim());
+        }
+        bf.close();
+        return sb.toString();
     }
 }

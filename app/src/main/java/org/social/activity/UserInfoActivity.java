@@ -3,6 +3,7 @@ package org.social.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,8 +33,11 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
     private TextView tv_sign;
     private TextView tv_fan;
     private TextView tv_focus;
+    private TextView tv_mail;
+    private TextView tv_phone;
     private RelativeLayout rlt_new;
     private LoadingDialog loadingDialog;
+    private Button btn_follow;
 
     private int userId;
 
@@ -51,13 +55,16 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
         tv_sign = findViewByID(R.id.tv_sign);
         tv_fan = findViewByID(R.id.tv_fan);
         tv_focus = findViewByID(R.id.tv_focus);
+        tv_phone = findViewByID(R.id.tv_phone);
+        tv_mail = findViewByID(R.id.tv_mail);
         rlt_new = findViewByID(R.id.rlt_new);
-
+        btn_follow = findViewByID(R.id.btn_follow);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         titleBar.left.setOnClickListener(this);
+        titleBar.right.setVisibility(View.GONE);
         rlt_new.setOnClickListener(this);
         tv_focus.setOnClickListener(this);
         tv_fan.setOnClickListener(this);
@@ -66,9 +73,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
         userId = getIntent().getIntExtra("userId", 0);
         if(userId == SpUtil.getUserId(this)){
             titleBar.right.setOnClickListener(this);
-        }
-        else{
-            titleBar.right.setVisibility(View.GONE);
+            titleBar.right.setVisibility(View.VISIBLE);
         }
 
         startTask();
@@ -84,20 +89,20 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
                 if(userInfoResponse != null){
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", userInfoResponse.getUser());
-                    startActivity(FillInfoActivity.class, null, 0);
+                    startActivity(FillInfoActivity.class, bundle, 0);
                 }
                 break;
             case R.id.rlt_new:
                 if(userInfoResponse != null) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("userId", userInfoResponse.getUser().getUserId());
+                    bundle.putInt("userId", userInfoResponse.getUser().getUserId());
                     startActivity(ShareListActivity.class, bundle, 0);
                 }
                 break;
             case R.id.tv_focus:
                 if(userInfoResponse != null) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("userId", userInfoResponse.getUser().getUserId());
+                    bundle.putInt("userId", userInfoResponse.getUser().getUserId());
                     bundle.putString(PersonListActivity.TYPE, PersonListActivity.FOLLOWER);
                     startActivity(PersonListActivity.class, bundle, 0);
                 }
@@ -106,7 +111,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
             case R.id.tv_fan:
                 if(userInfoResponse != null) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("userId", userInfoResponse.getUser().getUserId());
+                    bundle.putInt("userId", userInfoResponse.getUser().getUserId());
                     bundle.putString(PersonListActivity.TYPE, PersonListActivity.FAN);
                     startActivity(PersonListActivity.class, bundle, 0);
                 }
@@ -114,7 +119,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
             case R.id.img_head:
                 if(userInfoResponse != null) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("url", userInfoResponse.getUser().getAvatar());
+                    bundle.putString("url", userInfoResponse.getUser().getAvatar());
                     startActivity(PhotoActivity.class, bundle, 0);
                 }
                 break;
@@ -132,7 +137,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
         @Override
         protected Object doWorkInBackground(Object... params) {
             Api api = new Api(getThis());
-            userInfoResponse = api.information(userId);
+            userInfoResponse = api.information(SpUtil.getUserId(getThis()), userId);
             return null;
         }
     }
@@ -149,14 +154,41 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
             if(task instanceof GetInfoTask){
                 if(userInfoResponse.getStatus().equals("success")){
                     tv_name.setText(userInfoResponse.getUser().getNickname());
-                    ImageLoader.getInstance().displayImage(userInfoResponse.getUser().getAvatar(), img_head);
+                    ImageLoader.getInstance().displayImage(Api.IP + userInfoResponse.getUser().getAvatar(), img_head);
                     if(userInfoResponse.getUser().getSex() == 1){
                         img_gender.setImageResource(R.drawable.man);
                     }
                     else{
                         img_gender.setImageResource(R.drawable.woman);
                     }
+                    tv_fan.setText("粉丝  " + userInfoResponse.getUser().getFansNum());
+                    tv_focus.setText("关注  " + userInfoResponse.getUser().getFollowNum());
                     tv_sign.setText(userInfoResponse.getUser().getSignature());
+                    tv_mail.setText(userInfoResponse.getUser().getEmail());
+                    tv_phone.setText(userInfoResponse.getUser().getPhone());
+//                    if(userInfoResponse.getUser().getEmail() == null){
+//                        LogUtils.e("Aaaa");
+//                        tv_mail.setText("");
+//                    } else{
+//                        LogUtils.e("bbb");
+//                        tv_mail.setText(userInfoResponse.getUser().getEmail());
+//                    }
+//                    if(userInfoResponse.getUser().getPhone() == null){
+//                        tv_phone.setText("");
+//                    }
+//                    else{
+//                        tv_phone.setText(userInfoResponse.getUser().getPhone());
+//                    }
+                    if(userInfoResponse.getUser().getUserId() != SpUtil.getUserId(getThis())){
+                        if(userInfoResponse.getUser().isFollow()){
+                            btn_follow.setVisibility(View.VISIBLE);
+                            btn_follow.setText("unfollow");
+                        }
+                        else{
+                            btn_follow.setVisibility(View.VISIBLE);
+                            btn_follow.setText("follow");
+                        }
+                    }
                 }
                 else{
                     showToast(userInfoResponse.getMessage());

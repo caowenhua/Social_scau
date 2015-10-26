@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.lidroid.xutils.util.LogUtils;
+
 import org.social.R;
 import org.social.api.Api;
 import org.social.application.SysApplication;
@@ -150,6 +152,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     startActivity(FillInfoActivity.class, bundle, 0);
                     SpUtil.setIsUser(getThis(), true);
                     SpUtil.setUserId(getThis(), signInResponse.getUserId());
+                    LogUtils.e(signInResponse.getUserId() + "---");
                     SysApplication.getInstance().cleanBottom();
                     finish();
                 }
@@ -160,10 +163,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
             else if(task instanceof LoginTask){
                 if(loginResponse.getStatus().equals("success")){
-                    SpUtil.setUserId(getThis(), signInResponse.getUserId());
-                    startActivity(UserMainActivity.class, null, 0);
-                    SysApplication.getInstance().cleanBottom();
-                    finish();
+                    if(loginResponse.getUserId() == 0){
+                        SpUtil.setIsAdmin(getThis(), true);
+                        startActivity(TouristMainActivity.class, null, 0);
+                        SysApplication.getInstance().cleanBottom();
+                        finish();
+                    }
+                    else{
+                        SpUtil.setIsUser(getThis(), true);
+                        SpUtil.setUserId(getThis(), loginResponse.getUserId());
+                        startActivity(UserMainActivity.class, null, 0);
+                        SysApplication.getInstance().cleanBottom();
+                        finish();
+                    }
                 }
                 else{
                     showToast(loginResponse.getMessage());

@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import org.social.R;
 import org.social.base.BaseDialog;
+import org.social.widget.listener.OnButtonClickLister;
+import org.social.widget.listener.OnEditFinishListener;
 
 /**
  * Created by caowenhua on 2015/10/13.

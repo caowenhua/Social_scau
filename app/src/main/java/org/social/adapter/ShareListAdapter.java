@@ -21,14 +21,14 @@ import org.social.api.Api;
 import org.social.base.BaseTask;
 import org.social.base.TaskListener;
 import org.social.response.BaseResponse;
-import org.social.response.ShareGroundResponse;
+import org.social.response.SharesEntity;
 import org.social.util.DateUtil;
 import org.social.util.SpUtil;
 import org.social.widget.CircleImageView;
 import org.social.widget.NoScrollGridView;
 import org.social.widget.dialog.EditDialog;
 import org.social.widget.dialog.LoadingDialog;
-import org.social.widget.dialog.OnEditFinishListener;
+import org.social.widget.listener.OnEditFinishListener;
 
 import java.util.List;
 
@@ -37,9 +37,9 @@ import java.util.List;
  */
 public class ShareListAdapter extends BaseAdapter {
     private Context context;
-    private List<ShareGroundResponse.SharesEntity> list;
+    private List<SharesEntity> list;
 
-    public ShareListAdapter(Context context, List<ShareGroundResponse.SharesEntity> list) {
+    public ShareListAdapter(Context context, List<SharesEntity> list) {
         this.context = context;
         this.list = list;
     }
@@ -76,6 +76,7 @@ public class ShareListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if(v == finalHolder.img_head){
                     Intent intent = new Intent(context, UserInfoActivity.class);
+                    intent.putExtra("userId", list.get(position).getUserId());
                     context.startActivity(intent);
                 }
                 else if(v == finalHolder.rlt_comment){
@@ -106,7 +107,7 @@ public class ShareListAdapter extends BaseAdapter {
         holder.rlt_like.setOnClickListener(onClickListener);
         holder.rlt_share.setOnClickListener(onClickListener);
 
-        ImageLoader.getInstance().displayImage(list.get(position).getAvatar(), holder.img_head);
+        ImageLoader.getInstance().displayImage(Api.IP+list.get(position).getAvatar(), holder.img_head);
         holder.tv_name.setText(list.get(position).getNickname());
         holder.tv_content.setText(list.get(position).getContent());
         holder.tv_time.setText(DateUtil.getDateByTime(list.get(position).getShareTime()));
@@ -117,7 +118,7 @@ public class ShareListAdapter extends BaseAdapter {
         else if(list.get(position).getImgList().size() == 1){
             holder.img_single.setVisibility(View.VISIBLE);
             holder.grid_photo.setVisibility(View.GONE);
-            ImageLoader.getInstance().displayImage(list.get(position).getImgList().get(0), holder.img_single);
+            ImageLoader.getInstance().displayImage(Api.IP+list.get(position).getImgList().get(0), holder.img_single);
         }
         else{
             holder.img_single.setVisibility(View.GONE);

@@ -42,7 +42,7 @@ public class ShareDetailResponse extends BaseResponse {
         private String userName;
         private String nickname;
         private String avatar;
-        private String shareTime;
+        private long shareTime;
         private String content;
         private int likeCount;
         private int commentCount;
@@ -83,7 +83,7 @@ public class ShareDetailResponse extends BaseResponse {
             this.avatar = avatar;
         }
 
-        public void setShareTime(String shareTime) {
+        public void setShareTime(long shareTime) {
             this.shareTime = shareTime;
         }
 
@@ -131,7 +131,7 @@ public class ShareDetailResponse extends BaseResponse {
             return avatar;
         }
 
-        public String getShareTime() {
+        public long getShareTime() {
             return shareTime;
         }
 

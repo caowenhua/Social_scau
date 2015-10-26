@@ -1,5 +1,6 @@
 package org.social.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -41,17 +42,29 @@ public class SpUtil {
     }
 
     public static int getUserId(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("parameters",
+        SharedPreferences preferences = context.getSharedPreferences("params",
                 Context.MODE_PRIVATE);
         return preferences.getInt("UserId", -1);
     }
 
     public static void setUserId(Context context, int userId){
-        SharedPreferences preferences = context.getSharedPreferences("parameters",
+        SharedPreferences preferences = context.getSharedPreferences("params",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("UserId", userId);
         editor.commit();
     }
 
+    public static void exitLogin(Context context){
+//        setIsUser(context, false);
+//        setIsAdmin(context, false);
+        SharedPreferences preferences = context.getSharedPreferences("params",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("UserId");
+        editor.remove("isUser");
+        editor.remove("isAdmin");
+        editor.remove("isRejectShared");
+        editor.commit();
+    }
 }

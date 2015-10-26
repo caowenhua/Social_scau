@@ -9,8 +9,17 @@ import android.widget.TextView;
 
 import org.social.R;
 import org.social.adapter.ShareListAdapter;
+import org.social.api.Api;
 import org.social.base.BaseActivity;
+import org.social.base.BaseTask;
+import org.social.base.TaskListener;
+import org.social.response.AllShareResponse;
+import org.social.response.SharesEntity;
+import org.social.util.SpUtil;
 import org.social.widget.PullToRefreshView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by caowenhua on 2015/10/12.
@@ -25,6 +34,7 @@ public class UserMainActivity extends BaseActivity implements View.OnClickListen
     private ListView lv_list;
     private PullToRefreshView v_pull;
     private ShareListAdapter adapter;
+    private List<SharesEntity> list;
 
     @Override
     protected int setLayout() {
@@ -49,16 +59,19 @@ public class UserMainActivity extends BaseActivity implements View.OnClickListen
         img_search.setOnClickListener(this);
         img_setting.setOnClickListener(this);
         img_me.setOnClickListener(this);
+        list = new ArrayList<>();
 
         v_pull.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                v_pull.setRefreshing(true);
+                startGetShareTask();
             }
         });
 
-        adapter = new ShareListAdapter(this);
+        adapter = new ShareListAdapter(this, list);
         lv_list.setAdapter(adapter);
+
 
         lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,6 +79,8 @@ public class UserMainActivity extends BaseActivity implements View.OnClickListen
                 startActivity(ShareDetailActivity.class, null, 0);
             }
         });
+
+        startGetShareTask();
     }
 
     @Override
@@ -81,8 +96,56 @@ public class UserMainActivity extends BaseActivity implements View.OnClickListen
                 startActivity(SettingActivity.class, null, 0);
                 break;
             case R.id.img_me:
-                startActivity(UserInfoActivity.class, null, 0);
+                Bundle bundle = new Bundle();
+                bundle.putInt("userId", SpUtil.getUserId(getThis()));
+                startActivity(UserInfoActivity.class, bundle, 0);
                 break;
         }
     }
+
+    private void startGetShareTask(){
+        GetShareTask task = new GetShareTask();
+        task.setListener(taskListener);
+        task.execute();
+    }
+
+    private AllShareResponse allShareResponse;
+    private class GetShareTask extends BaseTask {
+        @Override
+        protected Object doWorkInBackground(Object... params) {
+            Api api = new Api(getThis());
+            allShareResponse = api.main(SpUtil.getUserId(getThis()));
+            return null;
+        }
+    }
+
+    private TaskListener taskListener = new TaskListener() {
+        @Override
+        public void onPreExecute(BaseTask task) {
+        }
+
+        @Override
+        public void onPostExecute(BaseTask task, Object result) {
+            if(task instanceof GetShareTask){
+                v_pull.setRefreshing(false);
+                if(allShareResponse.getStatus().equals("success")){
+                    list.addAll(allShareResponse.getShares());
+                    adapter.notifyDataSetChanged();
+                }
+                else{
+                    showToast(allShareResponse.getMessage());
+                }
+            }
+        }
+
+        @Override
+        public void onProgressUpdate(BaseTask task, Object param) {
+
+        }
+
+        @Override
+        public void onCancelled(BaseTask task) {
+
+        }
+    };
 }

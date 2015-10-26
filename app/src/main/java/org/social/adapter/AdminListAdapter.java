@@ -76,7 +76,7 @@ public class AdminListAdapter extends BaseAdapter {
         else{
             holder.btn_shut.setText("silence");
         }
-        ImageLoader.getInstance().displayImage(userListList.get(position).getAvatar(), holder.img_head);
+        ImageLoader.getInstance().displayImage(Api.IP+userListList.get(position).getAvatar(), holder.img_head);
         final ViewHolder finalHolder = holder;
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -149,6 +149,8 @@ public class AdminListAdapter extends BaseAdapter {
                                 userListList.get(changeTask.getPosition()).getIsShare());
                     }
                     notifyDataSetChanged();
+                }
+                else{
                     Toast.makeText(context, changeTask.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

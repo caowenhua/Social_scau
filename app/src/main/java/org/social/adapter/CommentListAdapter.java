@@ -1,7 +1,6 @@
 package org.social.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +8,21 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.social.R;
-import org.social.activity.UserInfoActivity;
+import org.social.response.ShareDetailResponse;
 import org.social.widget.CircleImageView;
+
+import java.util.List;
 
 /**
  * Created by caowenhua on 2015/10/14.
  */
 public class CommentListAdapter extends BaseAdapter {
     private Context context;
+    private List<ShareDetailResponse.ShareEntity.CommentsEntity> comments;
 
-    public CommentListAdapter(Context context) {
+    public CommentListAdapter(Context context, List<ShareDetailResponse.ShareEntity.CommentsEntity> comments) {
         this.context = context;
+        this.comments = comments;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class CommentListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if(convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.item_comment_list, null);
@@ -57,8 +60,9 @@ public class CommentListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(v == finalHolder.img_head){
-                    Intent intent = new Intent(context, UserInfoActivity.class);
-                    context.startActivity(intent);
+//                    Intent intent = new Intent(context, UserInfoActivity.class);
+//                    intent.putExtra("userId", comments.get(position).)
+//                    context.startActivity(intent);
                 }
             }
         };

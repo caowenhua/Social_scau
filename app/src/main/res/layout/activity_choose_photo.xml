@@ -9,7 +9,7 @@
     <org.social.widget.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:center_text="关于我们"
+        app:center_text="选择图片"
         app:right_text="确定"
         android:id="@+id/titlebar"
         />
@@ -20,6 +20,7 @@
         android:id="@+id/gv_photo"
         android:numColumns="4"
         android:layout_below="@+id/titlebar"
+        android:listSelector="@android:color/transparent"
         />
 
 
