@@ -32,7 +32,7 @@ import org.social.widget.dialog.ChoosePhotoDialog;
 import org.social.widget.dialog.ChooseSexDialog;
 import org.social.widget.dialog.EditDialog;
 import org.social.widget.dialog.LoadingDialog;
-import org.social.widget.dialog.OnEditFinishListener;
+import org.social.widget.listener.OnEditFinishListener;
 
 import java.io.File;
 

@@ -21,7 +21,7 @@ import org.social.widget.ShareDetailHeader;
 import org.social.widget.TitleBar;
 import org.social.widget.dialog.EditDialog;
 import org.social.widget.dialog.LoadingDialog;
-import org.social.widget.dialog.OnEditFinishListener;
+import org.social.widget.listener.OnEditFinishListener;
 
 import java.util.ArrayList;
 import java.util.List;

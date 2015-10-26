@@ -8,17 +8,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.lidroid.xutils.util.LogUtils;
+
 import org.social.R;
 import org.social.base.BaseActivity;
 import org.social.widget.NineGridlayout;
+import org.social.widget.TipTwoBtnDialog;
 import org.social.widget.TitleBar;
+import org.social.widget.listener.OnNineGridClickListener;
 
 import java.util.ArrayList;
 
 /**
  * Created by caowenhua on 2015/10/13.
  */
-public class EditShareActivity extends BaseActivity implements View.OnClickListener{
+public class EditShareActivity extends BaseActivity implements View.OnClickListener, OnNineGridClickListener{
 
     private TextView tv_count;
     private EditText edt_content;
@@ -28,6 +32,7 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
     private NineGridlayout grid_nine;
 
     private ArrayList<String> pathList;
+    private TipTwoBtnDialog dialog;
 
     @Override
     protected int setLayout() {
@@ -41,6 +46,7 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
         titleBar = findViewByID(R.id.titlebar);
 //        gridView = findViewByID(R.id.grid_photo);
         grid_nine = findViewByID(R.id.grid_nine);
+        grid_nine.setOnNineGridClickListener(this);
     }
 
     @Override
@@ -51,9 +57,6 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
         titleBar.right.setOnClickListener(this);
 
         grid_nine.setImagesData(pathList);
-
-//        adapter = new GridPhotoAdapter(this, pathList);
-//        setGridViewHeight(gridView);
 
         edt_content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,28 +72,6 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
             public void afterTextChanged(Editable s) {
             }
         });
-
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-//                if(pathList.get(position).equals("add")){
-//                    Bundle bundle = new Bundle();
-//                    bundle.putStringArrayList("path", pathList);
-//                    startActivity(ChoosePhotoActivity.class, null, 50);
-//                }
-//                else{
-//                    TipTwoBtnDialog dialog = new TipTwoBtnDialog(getThis(), "删除照片", "确认删除？"
-//                            , "取消", "确定", null, new OnButtonClickLister() {
-//                        @Override
-//                        public void onClick() {
-//                            pathList.remove(position);
-//                            adapter.notifyDataSetChanged();
-////                            setGridViewHeight(gridView);
-//                        }
-//                    });
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -123,7 +104,7 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
     }
 
 
-    public ArrayList<String> getPathList(){
+    private ArrayList<String> getPathList(){
         for (int i=0; i < pathList.size() ;i++){
             if(pathList.get(i).equals("add")){
                 pathList.remove(i);
@@ -133,8 +114,30 @@ public class EditShareActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void addPlus(){
-        if(pathList.size() < 9){
+        if(pathList.size() < 9 && !pathList.contains("add")){
             pathList.add("add");
+        }
+    }
+
+    @Override
+    public void onClick(final View v, final int position) {
+        LogUtils.e(v.getId() + "----------" + position + "---" + pathList.size());
+        if(pathList.get(position).equals("add")){
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("path", getPathList());
+            startActivity(ChoosePhotoActivity.class, bundle, 50);
+        }
+        else{
+            dialog = new TipTwoBtnDialog(getThis(), "丢弃图片", "确定丢弃图片？", "取消", "确定", null,
+                    new TipTwoBtnDialog.OnButtonClickLister(){
+                        @Override
+                        public void onClick() {
+                            pathList.remove(position);
+//                            grid_nine.removeView(v);
+                            addPlus();
+                            grid_nine.setImagesData(pathList);
+                        }
+                    });
         }
     }
 }

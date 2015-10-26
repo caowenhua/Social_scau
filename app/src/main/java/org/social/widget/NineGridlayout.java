@@ -1,7 +1,6 @@
 package org.social.widget;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,9 +11,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 import org.social.R;
-import org.social.activity.ChoosePhotoActivity;
-import org.social.activity.EditShareActivity;
 import org.social.util.ScreenTools;
+import org.social.widget.listener.OnNineGridClickListener;
 
 import java.util.List;
 
@@ -34,8 +32,7 @@ public class NineGridlayout extends ViewGroup implements OnClickListener{
     private int totalWidth;
     private int oldViewCount;
 
-    private EditShareActivity activity;
-    private TipTwoBtnDialog dialog;
+    private OnNineGridClickListener onNineGridClickListener;
 
     public NineGridlayout(Context context) {
         super(context);
@@ -45,7 +42,6 @@ public class NineGridlayout extends ViewGroup implements OnClickListener{
         super(context, attrs);
         ScreenTools screenTools=ScreenTools.instance(getContext());
         totalWidth=screenTools.getScreenWidth()-screenTools.dip2px(80);
-        activity = (EditShareActivity)getContext();
     }
 
     @Override
@@ -57,6 +53,7 @@ public class NineGridlayout extends ViewGroup implements OnClickListener{
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
     }
+
     private void layoutChildrenView(){
         int childrenCount = listData.size();
 
@@ -188,7 +185,7 @@ public class NineGridlayout extends ViewGroup implements OnClickListener{
 
 
     @Override
-    public void onClick(final View v) {
+    public void onClick(View v) {
         int size = -1;
         for(int i=0 ; i<getChildCount() ; i++){
             if(getChildAt(i).equals(v)){
@@ -196,23 +193,13 @@ public class NineGridlayout extends ViewGroup implements OnClickListener{
             }
         }
         if(size != -1){
-            if(listData.get(size).equals("add")){
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("path", activity.getPathList());
-                activity.startActivity(ChoosePhotoActivity.class, bundle, 50);
-            }
-            else{
-                final int finalSize = size;
-                dialog = new TipTwoBtnDialog(getContext(), "丢弃图片", "确定丢弃图片？", "取消", "确定", null,
-                        new TipTwoBtnDialog.OnButtonClickLister(){
-                            @Override
-                            public void onClick() {
-                                listData.remove(finalSize);
-                                removeView(v);
-                                layoutChildrenView();
-                            }
-                        });
+            if(onNineGridClickListener != null){
+                onNineGridClickListener.onClick(v, size);
             }
         }
+    }
+
+    public void setOnNineGridClickListener(OnNineGridClickListener listener){
+        onNineGridClickListener = listener;
     }
 }

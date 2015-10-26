@@ -1,4 +1,4 @@
-package org.social.widget.dialog;
+package org.social.widget.listener;
 
 /**
  * Created by liuqg on 2015/10/13.

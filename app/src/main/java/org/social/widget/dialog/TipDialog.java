@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import org.social.R;
 import org.social.base.BaseDialog;
+import org.social.widget.listener.OnButtonClickLister;
 
 
 public class TipDialog extends BaseDialog {

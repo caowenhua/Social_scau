@@ -28,7 +28,7 @@ import org.social.widget.CircleImageView;
 import org.social.widget.NoScrollGridView;
 import org.social.widget.dialog.EditDialog;
 import org.social.widget.dialog.LoadingDialog;
-import org.social.widget.dialog.OnEditFinishListener;
+import org.social.widget.listener.OnEditFinishListener;
 
 import java.util.List;
 

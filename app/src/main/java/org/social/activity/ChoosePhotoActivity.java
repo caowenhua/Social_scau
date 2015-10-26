@@ -1,6 +1,7 @@
 package org.social.activity;
 
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -118,6 +119,8 @@ public class ChoosePhotoActivity extends BaseActivity implements AdapterView.OnI
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
+//        String[] projection = { MediaStore.Images.Thumbnails._ID, MediaStore.Images.Thumbnails.IMAGE_ID,
+//                MediaStore.Images.Thumbnails.DATA };
         private final String[] IMAGE_PROJECTION = {
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.DATE_ADDED, MediaStore.Images.Media._ID };
@@ -127,6 +130,10 @@ public class ChoosePhotoActivity extends BaseActivity implements AdapterView.OnI
                     getThis(),
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                     IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[1] + " DESC");
+//            CursorLoader cursorLoader = new CursorLoader(
+//                    getThis(),
+//                    MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
+//                    projection, null, null, projection[1] + " DESC");
             return cursorLoader;
         }
 
@@ -140,6 +147,9 @@ public class ChoosePhotoActivity extends BaseActivity implements AdapterView.OnI
                     do {
                         allList.add(data.getString(data
                                 .getColumnIndexOrThrow(IMAGE_PROJECTION[0])));
+//                        String path = thumb2Path(data.getString(data.getColumnIndexOrThrow(projection[1])));
+//                        if(path != null)
+//                            allList.add(path);
                     } while (data.moveToNext());
                     adapter.notifyDataSetChanged();
                 }
@@ -151,6 +161,19 @@ public class ChoosePhotoActivity extends BaseActivity implements AdapterView.OnI
 
         }
     };
+
+    private String thumb2Path(String image_id){
+        ContentResolver cr = getContentResolver();
+        String[] projection = { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };
+        Cursor cursor = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection,
+                MediaStore.Images.Media._ID + "=" + image_id, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            return path;
+         }
+        return null;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
