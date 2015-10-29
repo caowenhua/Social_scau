@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -15,6 +16,7 @@ import org.social.api.Api;
 import org.social.base.BaseActivity;
 import org.social.base.BaseTask;
 import org.social.base.TaskListener;
+import org.social.response.BaseResponse;
 import org.social.response.UserInfoResponse;
 import org.social.util.SpUtil;
 import org.social.widget.CircleImageView;
@@ -123,6 +125,20 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
                     startActivity(PhotoActivity.class, bundle, 0);
                 }
                 break;
+            case R.id.btn_follow:
+                userInfoResponse.getUser().setIsFollow(!userInfoResponse.getUser().isFollow());
+                refreshFollowButton();
+                startTask();
+                break;
+        }
+    }
+
+    private void refreshFollowButton() {
+        if(userInfoResponse.getUser().isFollow()){
+            btn_follow.setText("unfollow");
+        }
+        else{
+            btn_follow.setText("follow");
         }
     }
 
@@ -130,6 +146,17 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
         GetInfoTask task = new GetInfoTask();
         task.setListener(taskListener);
         task.execute();
+    }
+
+    private BaseResponse changeResponse;
+    private class ChangeTask extends BaseTask {
+        @Override
+        protected Object doWorkInBackground(Object... params) {
+            Api api = new Api(getThis());
+            changeResponse = api.follow(SpUtil.getUserId(getThis()), userInfoResponse.getUser().getUserId(),
+                    userInfoResponse.getUser().isFollow());
+            return null;
+        }
     }
 
     private UserInfoResponse userInfoResponse;
@@ -145,13 +172,15 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
     private TaskListener taskListener = new TaskListener() {
         @Override
         public void onPreExecute(BaseTask task) {
-            loadingDialog = new LoadingDialog(getThis(), "正在加载..");
+            if(task instanceof GetInfoTask){
+                loadingDialog = new LoadingDialog(getThis(), "正在加载..");
+            }
         }
 
         @Override
         public void onPostExecute(BaseTask task, Object result) {
-            loadingDialog.dismiss();
             if(task instanceof GetInfoTask){
+                loadingDialog.dismiss();
                 if(userInfoResponse.getStatus().equals("success")){
                     tv_name.setText(userInfoResponse.getUser().getNickname());
                     ImageLoader.getInstance().displayImage(Api.IP + userInfoResponse.getUser().getAvatar(), img_head);
@@ -166,19 +195,6 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
                     tv_sign.setText(userInfoResponse.getUser().getSignature());
                     tv_mail.setText(userInfoResponse.getUser().getEmail());
                     tv_phone.setText(userInfoResponse.getUser().getPhone());
-//                    if(userInfoResponse.getUser().getEmail() == null){
-//                        LogUtils.e("Aaaa");
-//                        tv_mail.setText("");
-//                    } else{
-//                        LogUtils.e("bbb");
-//                        tv_mail.setText(userInfoResponse.getUser().getEmail());
-//                    }
-//                    if(userInfoResponse.getUser().getPhone() == null){
-//                        tv_phone.setText("");
-//                    }
-//                    else{
-//                        tv_phone.setText(userInfoResponse.getUser().getPhone());
-//                    }
                     if(userInfoResponse.getUser().getUserId() != SpUtil.getUserId(getThis())){
                         if(userInfoResponse.getUser().isFollow()){
                             btn_follow.setVisibility(View.VISIBLE);
@@ -188,10 +204,22 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
                             btn_follow.setVisibility(View.VISIBLE);
                             btn_follow.setText("follow");
                         }
+                        btn_follow.setOnClickListener(UserInfoActivity.this);
                     }
                 }
                 else{
                     showToast(userInfoResponse.getMessage());
+                }
+            }
+
+            else if(task instanceof ChangeTask){
+                if(!changeResponse.getStatus().equals("success")){
+                    userInfoResponse.getUser().setIsFollow(!userInfoResponse.getUser().isFollow());
+                    refreshFollowButton();
+                    Toast.makeText(getThis(), changeResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    refreshFollowButton();
                 }
             }
         }

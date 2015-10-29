@@ -36,7 +36,6 @@
                 android:textSize="@dimen/text"
                 android:paddingLeft="100dp"
                 android:gravity="center_vertical"
-                android:text="666"
                 />
             <ImageView
                 android:layout_width="20dp"
@@ -69,7 +68,6 @@
                 android:textSize="@dimen/text"
                 android:paddingLeft="100dp"
                 android:gravity="center_vertical"
-                android:text="1345"
                 />
             <ImageView
                 android:layout_width="20dp"

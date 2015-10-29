@@ -76,6 +76,8 @@ public class UserMainActivity extends BaseActivity implements View.OnClickListen
         lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("shareId", list.get(position).getShareId());
                 startActivity(ShareDetailActivity.class, null, 0);
             }
         });
@@ -129,6 +131,7 @@ public class UserMainActivity extends BaseActivity implements View.OnClickListen
             if(task instanceof GetShareTask){
                 v_pull.setRefreshing(false);
                 if(allShareResponse.getStatus().equals("success")){
+                    list.clear();
                     list.addAll(allShareResponse.getShares());
                     adapter.notifyDataSetChanged();
                 }

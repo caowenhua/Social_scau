@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import org.social.R;
+import org.social.api.Api;
 import org.social.response.ShareDetailResponse;
 import org.social.widget.CircleImageView;
 
@@ -27,7 +30,7 @@ public class CommentListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 30;
+        return comments.size();
     }
 
     @Override
@@ -67,6 +70,10 @@ public class CommentListAdapter extends BaseAdapter {
             }
         };
         holder.img_head.setOnClickListener(onClickListener);
+        holder.tv_name.setText(comments.get(position).getUserName());
+        holder.tv_content.setText(comments.get(position).getComment());
+        holder.tv_time.setText(comments.get(position).getCommentTime());
+        ImageLoader.getInstance().displayImage(Api.IP+comments.get(position).getAvatar(), holder.img_head);
         return convertView;
     }
 

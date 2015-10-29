@@ -11,7 +11,7 @@
         android:layout_height="40dp"
         android:src="@drawable/ic_launcher"
         android:id="@+id/img_head"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         />
@@ -20,23 +20,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_name"
-        android:textSize="@dimen/text"
+        android:textSize="@dimen/text_s"
         android:textColor="@color/text"
         android:singleLine="true"
         android:maxLength="20"
-        android:text="chen jian wen"
         android:layout_toRightOf="@+id/img_head"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_time"
-        android:textSize="@dimen/text"
-        android:textColor="@color/text_shadow"
+        android:textSize="@dimen/text_s"
+        android:textColor="@color/text"
         android:singleLine="true"
-        android:text="2012.02.02"
         android:layout_margin="20dp"
         android:layout_alignParentRight="true"
         />
@@ -47,7 +47,6 @@
         android:id="@+id/tv_content"
         android:textSize="@dimen/text"
         android:textColor="@color/text_deep"
-        android:text="i m a sb!!!!!\n\ni am prond of myself!"
         android:layout_below="@+id/img_head"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -72,6 +71,14 @@
             android:scaleType="centerCrop"
             />
 
+        <org.social.widget.NineGridlayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/grid_nine"
+            android:layout_below="@+id/img_switch"
+            />
+
+        <!--
         <org.social.widget.NoScrollGridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,6 +88,7 @@
             android:verticalSpacing="2dp"
             android:scrollbars="none"
             />
+            -->
     </FrameLayout>
 
     <LinearLayout

@@ -56,6 +56,8 @@ public class ShareListActivity extends BaseActivity implements View.OnClickListe
         lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("shareId", list.get(position).getShareId());
                 startActivity(ShareDetailActivity.class, null, 0);
             }
         });

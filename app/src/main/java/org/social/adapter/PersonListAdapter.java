@@ -197,6 +197,9 @@ public class PersonListAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                     Toast.makeText(context, changeTask.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    notifyDataSetChanged();
+                }
             }
         }
 

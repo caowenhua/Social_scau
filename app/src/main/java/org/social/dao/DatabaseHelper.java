@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+
+import org.social.bean.UploadShareBean;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -48,27 +51,27 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public void onCreate(SQLiteDatabase database,
 			ConnectionSource connectionSource)
 	{
-//		try
-//		{
-//			TableUtils.createTable(connectionSource, MusicListItemBean.class);
-//		} catch (SQLException e)
-//		{
-//			e.printStackTrace();
-//		}
+		try
+		{
+			TableUtils.createTable(connectionSource, UploadShareBean.class);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase database,
 			ConnectionSource connectionSource, int oldVersion, int newVersion)
 	{
-//		try
-//		{
-//			TableUtils.dropTable(connectionSource, MusicListItemBean.class, true);
-//			onCreate(database, connectionSource);
-//		} catch (SQLException e)
-//		{
-//			e.printStackTrace();
-//		}
+		try
+		{
+			TableUtils.dropTable(connectionSource, UploadShareBean.class, true);
+			onCreate(database, connectionSource);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public synchronized Dao getDao(Class clazz) throws SQLException

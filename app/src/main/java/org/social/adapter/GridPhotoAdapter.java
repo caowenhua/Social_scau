@@ -58,7 +58,7 @@ public class GridPhotoAdapter extends BaseAdapter {
             holder.img_photo.setImageResource(R.drawable.add_photo_plus);
         }
         else{
-            if(urls.get(position).contains("http")){
+            if(urls.get(position).contains("Share")){
                 ImageLoader.getInstance().displayImage(Api.IP+urls.get(position) ,holder.img_photo);
             }
             else{

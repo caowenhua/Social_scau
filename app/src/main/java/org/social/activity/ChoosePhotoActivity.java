@@ -104,6 +104,9 @@ public class ChoosePhotoActivity extends BaseActivity implements AdapterView.OnI
     @Override
     public void onClick(View v) {
         if(v == titleBar.left){
+            Intent intent = new Intent();
+            intent.putExtra("path", "none");
+            setResult(RESULT_OK, intent);
             finish();
         }
         else if(v == titleBar.right){
@@ -112,6 +115,15 @@ public class ChoosePhotoActivity extends BaseActivity implements AdapterView.OnI
             setResult(RESULT_OK, intent);
             finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent();
+        intent.putExtra("path", "none");
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void setRightText(){

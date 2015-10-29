@@ -9,9 +9,8 @@
     <org.social.widget.CircleImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/ic_launcher"
         android:id="@+id/img_head"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         />
@@ -24,7 +23,6 @@
         android:textColor="@color/text"
         android:singleLine="true"
         android:maxLength="20"
-        android:text="name"
         android:layout_toRightOf="@+id/img_head"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
@@ -37,7 +35,6 @@
         android:textSize="@dimen/text"
         android:textColor="@color/text_shadow"
         android:singleLine="true"
-        android:text="2012.02.02"
         android:layout_below="@+id/tv_name"
         android:layout_toRightOf="@+id/img_head"
         android:layout_marginLeft="20dp"
@@ -48,8 +45,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_content"
         android:textSize="@dimen/text"
-        android:textColor="@color/text_shadow"
-        android:text="content \ncontent"
+        android:textColor="@color/text_deep"
         android:layout_below="@+id/img_head"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -81,11 +77,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img_single"
-            android:src="@drawable/buildings"
             android:maxHeight="250dp"
             android:scaleType="centerCrop"
             />
 
+        <org.social.widget.NineGridlayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/grid_nine"
+            android:layout_below="@+id/img_switch"
+            />
+
+        <!--
         <org.social.widget.NoScrollGridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,6 +98,7 @@
             android:verticalSpacing="2dp"
             android:scrollbars="none"
             />
+            -->
     </FrameLayout>
 
 

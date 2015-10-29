@@ -75,8 +75,10 @@ public class ChoosePhotoAdapter extends BaseAdapter{
         }
         if(allList.get(position).equals("camera")){
             holder.img_photo.setImageResource(R.drawable.camera);
+            holder.img_choose.setVisibility(View.GONE);
         }
         else{
+            holder.img_choose.setVisibility(View.VISIBLE);
             if(isIn){
                 holder.img_choose.setImageResource(R.drawable.common_check_icon);
             }

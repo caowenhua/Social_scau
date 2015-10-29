@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.social.R;
+import org.social.activity.PhotoActivity;
 import org.social.activity.ShareDetailActivity;
 import org.social.activity.UserInfoActivity;
 import org.social.api.Api;
@@ -22,13 +23,13 @@ import org.social.base.BaseTask;
 import org.social.base.TaskListener;
 import org.social.response.BaseResponse;
 import org.social.response.SharesEntity;
-import org.social.util.DateUtil;
 import org.social.util.SpUtil;
 import org.social.widget.CircleImageView;
-import org.social.widget.NoScrollGridView;
+import org.social.widget.NineGridlayout;
 import org.social.widget.dialog.EditDialog;
 import org.social.widget.dialog.LoadingDialog;
 import org.social.widget.listener.OnEditFinishListener;
+import org.social.widget.listener.OnNineGridClickListener;
 
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class ShareListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if(convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.item_share_list, null);
             holder = getViewHolder(convertView);
@@ -98,6 +99,7 @@ public class ShareListAdapter extends BaseAdapter {
                 }
                 else if(v == finalHolder.rlt_share){
                     Intent intent = new Intent(context, ShareDetailActivity.class);
+                    intent.putExtra("shareId", list.get(position).getShareId());
                     context.startActivity(intent);
                 }
             }
@@ -107,24 +109,37 @@ public class ShareListAdapter extends BaseAdapter {
         holder.rlt_like.setOnClickListener(onClickListener);
         holder.rlt_share.setOnClickListener(onClickListener);
 
+        holder.grid_nine.setOnNineGridClickListener(new OnNineGridClickListener() {
+            @Override
+            public void onClick(View v, int size) {
+                Intent intent = new Intent(context, PhotoActivity.class);
+                intent.putExtra("url", list.get(position).getImgList().get(size));
+                context.startActivity(intent);
+            }
+        });
+
         ImageLoader.getInstance().displayImage(Api.IP+list.get(position).getAvatar(), holder.img_head);
         holder.tv_name.setText(list.get(position).getNickname());
         holder.tv_content.setText(list.get(position).getContent());
-        holder.tv_time.setText(DateUtil.getDateByTime(list.get(position).getShareTime()));
+        holder.tv_time.setText(list.get(position).getShareTime());
         if(list.get(position).getImgList().size() == 0){
             holder.img_single.setVisibility(View.GONE);
-            holder.grid_photo.setVisibility(View.GONE);
+            holder.grid_nine.setVisibility(View.GONE);
+//            holder.grid_photo.setVisibility(View.GONE);
         }
         else if(list.get(position).getImgList().size() == 1){
             holder.img_single.setVisibility(View.VISIBLE);
-            holder.grid_photo.setVisibility(View.GONE);
+            holder.grid_nine.setVisibility(View.GONE);
+//            holder.grid_photo.setVisibility(View.GONE);
             ImageLoader.getInstance().displayImage(Api.IP+list.get(position).getImgList().get(0), holder.img_single);
         }
         else{
             holder.img_single.setVisibility(View.GONE);
-            holder.grid_photo.setVisibility(View.VISIBLE);
-            GridPhotoAdapter gridPhotoAdapter = new GridPhotoAdapter(context, list.get(position).getImgList());
-            holder.grid_photo.setAdapter(gridPhotoAdapter);
+            holder.grid_nine.setVisibility(View.VISIBLE);
+//            holder.grid_photo.setVisibility(View.VISIBLE);
+            holder.grid_nine.setImagesData(list.get(position).getImgList());
+//            GridPhotoAdapter gridPhotoAdapter = new GridPhotoAdapter(context, list.get(position).getImgList());
+//            holder.grid_photo.setAdapter(gridPhotoAdapter);
         }
         holder.tv_like.setText(list.get(position).getLikeCount() + "");
         holder.tv_comment.setText(list.get(position).getCommentCount() + "");
@@ -150,7 +165,8 @@ public class ShareListAdapter extends BaseAdapter {
         holder.tv_comment = (TextView) convertView.findViewById(R.id.tv_comment);
         holder.img_single = (ImageView) convertView.findViewById(R.id.img_single);
         holder.img_like = (ImageView) convertView.findViewById(R.id.img_like);
-        holder.grid_photo = (NoScrollGridView) convertView.findViewById(R.id.grid_photo);
+//        holder.grid_photo = (NoScrollGridView) convertView.findViewById(R.id.grid_photo);
+        holder.grid_nine = (NineGridlayout) convertView.findViewById(R.id.grid_nine);
         holder.rlt_like = (RelativeLayout) convertView.findViewById(R.id.rlt_like);
         holder.rlt_comment = (RelativeLayout) convertView.findViewById(R.id.rlt_comment);
         holder.rlt_share = (RelativeLayout) convertView.findViewById(R.id.rlt_share);
@@ -168,7 +184,8 @@ public class ShareListAdapter extends BaseAdapter {
 //        TextView tv_more;
         ImageView img_single;
         ImageView img_like;
-        NoScrollGridView grid_photo;
+//        NoScrollGridView grid_photo;
+        NineGridlayout grid_nine;
         RelativeLayout rlt_like;
         RelativeLayout rlt_comment;
 //        RelativeLayout rlt_more;
@@ -213,7 +230,9 @@ public class ShareListAdapter extends BaseAdapter {
                 loadingDialog.dismiss();
                 if(commentResponse.getStatus().equals("success")){
                     Toast.makeText(context, "评论成功", Toast.LENGTH_SHORT).show();
-                    list.get(((CommentTask)task).getPosition()).setCommentCount(list.get(((CommentTask)task).getPosition()).getCommentCount()+1);
+                    list.get(((CommentTask)task).getPosition()).setCommentCount(
+                            list.get(((CommentTask)task).getPosition()).getCommentCount()+1);
+                    notifyDataSetChanged();
                 }
                 else{
                     Toast.makeText(context, commentResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -226,6 +245,9 @@ public class ShareListAdapter extends BaseAdapter {
                             setIsLike(!list.get(LikeTask.getPosition()).isLike());
                     notifyDataSetChanged();
                     Toast.makeText(context, LikeTask.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    notifyDataSetChanged();
                 }
             }
         }

@@ -11,6 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 import org.social.R;
+import org.social.api.Api;
 import org.social.util.ScreenTools;
 import org.social.widget.listener.OnNineGridClickListener;
 
@@ -77,8 +78,8 @@ public class NineGridlayout extends ViewGroup implements OnClickListener{
             if(listData.get(i).equals("add")){
                 childrenView.setImageResource(R.drawable.add_photo_plus);
             }
-            else if(listData.get(i).contains("http")){
-                ImageLoader.getInstance().displayImage(listData.get(i), childrenView);
+            else if(listData.get(i).contains("Share")){
+                ImageLoader.getInstance().displayImage(Api.IP+listData.get(i), childrenView);
             }
             else{
                 ImageLoader.getInstance().displayImage(ImageDownloader.Scheme.FILE.wrap(listData.get(i)), childrenView);

@@ -21,7 +21,6 @@
         android:textColor="@color/text"
         android:singleLine="true"
         android:ellipsize="end"
-        android:text="kao ge"
         android:layout_toRightOf="@+id/img_head"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
@@ -34,9 +33,9 @@
         android:textSize="@dimen/text"
         android:textColor="@color/text"
         android:ellipsize="end"
-        android:text="diao ni lao mu !!! \n this is comment \n do you see that >\n i am a rich guy !!\nthe most rich person in the world!!"
         android:layout_toRightOf="@+id/img_head"
         android:layout_below="@+id/img_head"
+        android:layout_marginLeft="10dp"
         android:padding="10dp"
         />
 

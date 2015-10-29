@@ -69,7 +69,7 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initData(Bundle savedInstanceState) {
         titleBar.left.setOnClickListener(this);
-        getIntent().getIntExtra("shareId", -1);
+        shareId = getIntent().getIntExtra("shareId", -1);
         if(shareId == -1){
             finish();
         }
@@ -209,6 +209,9 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
                     shareDetailResponse.getShare().setIsLike(!shareDetailResponse.getShare().isLike());
                     refreshLikeImg();
                     showToast(likeResponse.getMessage());
+                }
+                else{
+                    refreshLikeImg();
                 }
             }
             else if(task instanceof CommentTask){

@@ -136,7 +136,7 @@ public class Api {
     }
 
     public AllShareResponse main(int userId){
-        String url = host + "user/main";
+        String url = host + "share/main";
         ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
         params.add(new BasicNameValuePair("userId", userId + ""));
         BaseResponse response = request(Method.post, url, params,
@@ -145,7 +145,7 @@ public class Api {
     }
 
     public ShareDetailResponse main(int userId, int shareId){
-        String url = host + "user/main";
+        String url = host + "share/main";
         ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
         params.add(new BasicNameValuePair("userId", userId + ""));
         params.add(new BasicNameValuePair("shareId", shareId + ""));

@@ -11,6 +11,13 @@ public class SharesEntity implements Serializable{
     private int userId;
     private String userName;
     private String nickname;
+    private String avatar;
+    private String shareTime;
+    private String content;
+    private int likeCount;
+    private int commentCount;
+    private boolean isLike;
+    private List<String> imgList;
 
     public String getNickname() {
         return nickname;
@@ -23,15 +30,6 @@ public class SharesEntity implements Serializable{
     public boolean isLike() {
         return isLike;
     }
-
-    private String avatar;
-    private long shareTime;
-    private String content;
-    private int likeCount;
-    private int commentCount;
-    private boolean isLike;
-    private List<String> imgList;
-
     public void setShareId(int shareId) {
         this.shareId = shareId;
     }
@@ -48,7 +46,7 @@ public class SharesEntity implements Serializable{
         this.avatar = avatar;
     }
 
-    public void setShareTime(long shareTime) {
+    public void setShareTime(String shareTime) {
         this.shareTime = shareTime;
     }
 
@@ -88,7 +86,7 @@ public class SharesEntity implements Serializable{
         return avatar;
     }
 
-    public long getShareTime() {
+    public String getShareTime() {
         return shareTime;
     }
 
