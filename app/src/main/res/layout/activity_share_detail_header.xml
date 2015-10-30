@@ -78,6 +78,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/img_single"
             android:maxHeight="250dp"
+            android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             />
 

@@ -35,6 +35,7 @@ import org.social.widget.dialog.LoadingDialog;
 import org.social.widget.listener.OnEditFinishListener;
 
 import java.io.File;
+import java.net.URLEncoder;
 
 /**
  * Created by caowenhua on 2015/10/14.
@@ -140,7 +141,8 @@ public class FillInfoActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.rlt_name:
-                EditDialog editNameDialog = new EditDialog(getThis(), "请输入名称", "取消", "确定", null, new OnEditFinishListener() {
+                EditDialog editNameDialog = new EditDialog(getThis(), "请输入名称",tv_name.getText().toString(),
+                        "取消", "确定", null, new OnEditFinishListener() {
                     @Override
                     public void onFinish(String content) {
                         name = content;
@@ -158,7 +160,8 @@ public class FillInfoActivity extends BaseActivity implements View.OnClickListen
                 });
                 break;
             case R.id.rlt_sign:
-                EditDialog editSignDialog = new EditDialog(getThis(), "请填写个性签名", "取消", "确定", null, new OnEditFinishListener() {
+                EditDialog editSignDialog = new EditDialog(getThis(), "请填写个性签名",tv_sign.getText().toString(),
+                        "取消", "确定", null, new OnEditFinishListener() {
                     @Override
                     public void onFinish(String content) {
                         sign = content;
@@ -167,7 +170,8 @@ public class FillInfoActivity extends BaseActivity implements View.OnClickListen
                 });
                 break;
             case R.id.rlt_phone:
-                EditDialog phoneDialog = new EditDialog(getThis(), "请输入手机", "取消", "确定", null, new OnEditFinishListener() {
+                EditDialog phoneDialog = new EditDialog(getThis(), "请输入手机",tv_phone.getText().toString(),
+                        "取消", "确定", null, new OnEditFinishListener() {
                     @Override
                     public void onFinish(String content) {
                         phone = content;
@@ -176,7 +180,8 @@ public class FillInfoActivity extends BaseActivity implements View.OnClickListen
                 });
                 break;
             case R.id.rlt_mail:
-                EditDialog mailDialog = new EditDialog(getThis(), "请输入邮箱", "取消", "确定", null, new OnEditFinishListener() {
+                EditDialog mailDialog = new EditDialog(getThis(), "请输入邮箱",tv_mail.getText().toString(),
+                        "取消", "确定", null, new OnEditFinishListener() {
                     @Override
                     public void onFinish(String content) {
                         mail = content;
@@ -292,8 +297,9 @@ public class FillInfoActivity extends BaseActivity implements View.OnClickListen
 //        requestParams.addBodyParameter("email", mail);
 
         String url = Api.IP +"/Share/user/changeInformation?" + "userId=" + SpUtil.getUserId(getThis())
-                +"&sex=" + gender + "&nickname=" + name + "&signature=" + sign + "&phone=" + phone
-                +"&email=" + mail;
+                +"&sex=" + gender + "&nickname=" + URLEncoder.encode(name) + "&signature="
+                + URLEncoder.encode(sign) + "&phone=" + URLEncoder.encode(phone)
+                +"&email=" + URLEncoder.encode(mail);
         LogUtils.e( url );
         try{
             HttpUtils http = new HttpUtils();

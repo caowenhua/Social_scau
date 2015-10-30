@@ -38,10 +38,19 @@
             android:name=".activity.ChoosePhotoActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activity.CollectionListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.DynamicActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activity.EditShareActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.FillInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.GagActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.GroundActivity"
@@ -60,9 +69,6 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ShareDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activity.ShareListActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.TouristMainActivity"

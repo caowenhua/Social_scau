@@ -38,6 +38,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
     private TextView tv_mail;
     private TextView tv_phone;
     private RelativeLayout rlt_new;
+    private RelativeLayout rlt_collect;
     private LoadingDialog loadingDialog;
     private Button btn_follow;
 
@@ -60,6 +61,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
         tv_phone = findViewByID(R.id.tv_phone);
         tv_mail = findViewByID(R.id.tv_mail);
         rlt_new = findViewByID(R.id.rlt_new);
+        rlt_collect = findViewByID(R.id.rlt_collect);
         btn_follow = findViewByID(R.id.btn_follow);
     }
 
@@ -98,8 +100,11 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
                 if(userInfoResponse != null) {
                     Bundle bundle = new Bundle();
                     bundle.putInt("userId", userInfoResponse.getUser().getUserId());
-                    startActivity(ShareListActivity.class, bundle, 0);
+                    startActivity(DynamicActivity.class, bundle, 0);
                 }
+                break;
+            case R.id.rlt_collect:
+                startActivity(CollectionListActivity.class, null, 0);
                 break;
             case R.id.tv_focus:
                 if(userInfoResponse != null) {
@@ -135,10 +140,10 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
 
     private void refreshFollowButton() {
         if(userInfoResponse.getUser().isFollow()){
-            btn_follow.setText("unfollow");
+            btn_follow.setText("取消关注");
         }
         else{
-            btn_follow.setText("follow");
+            btn_follow.setText("关注");
         }
     }
 
@@ -164,7 +169,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
         @Override
         protected Object doWorkInBackground(Object... params) {
             Api api = new Api(getThis());
-            userInfoResponse = api.information(SpUtil.getUserId(getThis()), userId);
+            userInfoResponse = api.information(userId, SpUtil.getUserId(getThis()));
             return null;
         }
     }
@@ -198,13 +203,17 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
                     if(userInfoResponse.getUser().getUserId() != SpUtil.getUserId(getThis())){
                         if(userInfoResponse.getUser().isFollow()){
                             btn_follow.setVisibility(View.VISIBLE);
-                            btn_follow.setText("unfollow");
+                            btn_follow.setText("取消关注");
                         }
                         else{
                             btn_follow.setVisibility(View.VISIBLE);
-                            btn_follow.setText("follow");
+                            btn_follow.setText("关注");
                         }
                         btn_follow.setOnClickListener(UserInfoActivity.this);
+                    }
+                    else{
+                        rlt_collect.setVisibility(View.VISIBLE);
+                        rlt_collect.setOnClickListener(UserInfoActivity.this);
                     }
                 }
                 else{

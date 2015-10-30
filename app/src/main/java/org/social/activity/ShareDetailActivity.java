@@ -90,6 +90,12 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.rlt_like:
                 shareDetailResponse.getShare().setIsLike(!shareDetailResponse.getShare().isLike());
+                if(shareDetailResponse.getShare().isLike()){
+                    shareDetailResponse.getShare().setLikeCount(shareDetailResponse.getShare().getLikeCount()+1);
+                }
+                else{
+                    shareDetailResponse.getShare().setLikeCount(shareDetailResponse.getShare().getLikeCount()-1);
+                }
                 refreshLikeImg();
                 startLikeTask();
                 break;
@@ -120,7 +126,7 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
                 });
     }
 
-    private void startCommentTask(String comment){
+    public void startCommentTask(String comment){
         CommentTask task = new CommentTask(comment);
         task.setListener(taskListener);
         task.execute();
@@ -207,6 +213,12 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
             else if(task instanceof LikeTask){
                 if(!likeResponse.getStatus().equals("success")){
                     shareDetailResponse.getShare().setIsLike(!shareDetailResponse.getShare().isLike());
+                    if(!shareDetailResponse.getShare().isLike()){
+                        shareDetailResponse.getShare().setLikeCount(shareDetailResponse.getShare().getLikeCount()+1);
+                    }
+                    else{
+                        shareDetailResponse.getShare().setLikeCount(shareDetailResponse.getShare().getLikeCount()-1);
+                    }
                     refreshLikeImg();
                     showToast(likeResponse.getMessage());
                 }
@@ -217,6 +229,8 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
             else if(task instanceof CommentTask){
                 loadingDialog.dismiss();
                 if(commentResponse.getStatus().equals("success")){
+                    shareDetailResponse.getShare().setCommentCount(shareDetailResponse.getShare().getCommentCount()+1);
+                    tv_comment.setText(shareDetailResponse.getShare().getCommentCount() + "");
                     showToast("评论成功");
                     finish();
                 }
@@ -244,5 +258,6 @@ public class ShareDetailActivity extends BaseActivity implements View.OnClickLis
         else{
             img_like.setImageResource(R.drawable.feed_button_like);
         }
+        tv_like.setText(shareDetailResponse.getShare().getLikeCount()+"");
     }
 }

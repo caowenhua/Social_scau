@@ -67,6 +67,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/img_single"
             android:src="@drawable/buildings"
+            android:adjustViewBounds="true"
             android:maxHeight="250dp"
             android:scaleType="centerCrop"
             />

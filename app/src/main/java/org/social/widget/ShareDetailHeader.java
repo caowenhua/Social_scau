@@ -78,7 +78,7 @@ public class ShareDetailHeader extends RelativeLayout implements View.OnClickLis
                 break;
             case R.id.img_single:
                 if(entity != null){
-                    Intent intent = new Intent();
+                    Intent intent = new Intent(getContext(), PhotoActivity.class);
                     intent.putExtra("url", entity.getImgList().get(0));
                     getContext().startActivity(intent);
                 }

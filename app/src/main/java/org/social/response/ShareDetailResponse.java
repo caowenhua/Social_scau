@@ -172,11 +172,20 @@ public class ShareDetailResponse extends BaseResponse {
              * comment : wahahah
              */
 
+            private int userId;
             private int commentId;
             private String commentTime;
             private String userName;
             private String avatar;
             private String comment;
+
+            public int getUserId() {
+                return userId;
+            }
+
+            public void setUserId(int userId) {
+                this.userId = userId;
+            }
 
             public void setCommentId(int commentId) {
                 this.commentId = commentId;

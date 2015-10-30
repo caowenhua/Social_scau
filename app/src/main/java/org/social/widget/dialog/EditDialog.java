@@ -64,6 +64,48 @@ public class EditDialog extends BaseDialog{
         });
     }
 
+    /**
+     *
+     * @param context
+     * @param title	dialog标题
+     */
+    public EditDialog(Context context, String title, String content, String leftButton,
+                      String rightButton, OnButtonClickLister leftListener, OnEditFinishListener rightListener) {
+        super(context);
+        leftButtonListener = leftListener;
+        rightButtonListener = rightListener;
+        tv_title.setText(title);
+        if(content != null){
+            edt_content.setText(content);
+        }
+        btn_right.setText(rightButton);
+        btn_left.setText(leftButton);
+        btn_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rightButtonListener != null) {
+                    String content;
+                    if (edt_content.getText().length() > 0) {
+                        content = edt_content.getText().toString();
+                    } else {
+                        content = "";
+                    }
+                    rightButtonListener.onFinish(content);
+                }
+                dismiss();
+            }
+        });
+        btn_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (leftButtonListener != null) {
+                    leftButtonListener.onClick();
+                }
+                dismiss();
+            }
+        });
+    }
+
     @Override
     protected int setLayout() {
         return R.layout.dialog_edit;

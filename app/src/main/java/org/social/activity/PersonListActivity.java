@@ -75,6 +75,18 @@ public class PersonListActivity extends BaseActivity implements View.OnClickList
             startFollowTask();
         }
         lv_list.setAdapter(adapter);
+        v_pull.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                v_pull.setRefreshing(true);
+                if(type.equals(FAN)){
+                    startFanTask();
+                }
+                else{
+                    startFollowTask();
+                }
+            }
+        });
     }
 
     @Override
@@ -126,6 +138,7 @@ public class PersonListActivity extends BaseActivity implements View.OnClickList
         public void onPostExecute(BaseTask task, Object result) {
             loadingDialog.dismiss();
             if(task instanceof GetFanTask){
+                v_pull.setRefreshing(false);
                 if(fanListResponse.getStatus().equals("success")){
                     fanList.clear();
                     fanList.addAll(fanListResponse.getUserList());
@@ -136,6 +149,7 @@ public class PersonListActivity extends BaseActivity implements View.OnClickList
                 }
             }
             else if(task instanceof GetFollowTask){
+                v_pull.setRefreshing(false);
                 if(followListResponse.getStatus().equals("success")){
                     followList.clear();
                     followList.addAll(followListResponse.getUserList());

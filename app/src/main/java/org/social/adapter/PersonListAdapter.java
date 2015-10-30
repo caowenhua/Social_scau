@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +82,7 @@ public class PersonListAdapter extends BaseAdapter {
             holder.img_head = (CircleImageView) convertView.findViewById(R.id.img_head);
             holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             holder.tv_sign = (TextView) convertView.findViewById(R.id.tv_sign);
+            holder.rlt = (RelativeLayout) convertView.findViewById(R.id.rlt);
             convertView.setTag(holder);
         }
         else{
@@ -91,10 +93,10 @@ public class PersonListAdapter extends BaseAdapter {
             holder.tv_sign.setText(fanList.get(position).getSignature());
             ImageLoader.getInstance().displayImage(Api.IP+fanList.get(position).getAvatar(), holder.img_head);
             if(fanList.get(position).isFollow()){
-                holder.btn_follow.setText("followed");
+                holder.btn_follow.setText("取消关注");
             }
             else{
-                holder.btn_follow.setText("follow");
+                holder.btn_follow.setText("关注");
             }
         }
         else{
@@ -102,10 +104,10 @@ public class PersonListAdapter extends BaseAdapter {
             holder.tv_sign.setText(followList.get(position).getSignature());
             ImageLoader.getInstance().displayImage(Api.IP+followList.get(position).getAvatar(), holder.img_head);
             if(followList.get(position).isAttention()){
-                holder.btn_follow.setText("followed");
+                holder.btn_follow.setText("取消关注");
             }
             else{
-                holder.btn_follow.setText("follow");
+                holder.btn_follow.setText("关注");
             }
         }
         final ViewHolder finalHolder = holder;
@@ -125,6 +127,12 @@ public class PersonListAdapter extends BaseAdapter {
                 else if(v == finalHolder.btn_follow){
                     if(type == 0){
                         fanList.get(position).setIsFollow(!fanList.get(position).isFollow());
+                        if(fanList.get(position).isFollow()){
+                            finalHolder.btn_follow.setText("取消关注");
+                        }
+                        else{
+                            finalHolder.btn_follow.setText("关注");
+                        }
                     }
                     else{
                         followList.get(position).setIsAttention(!followList.get(position).isAttention());
@@ -136,12 +144,14 @@ public class PersonListAdapter extends BaseAdapter {
                 }
             }
         };
-        holder.img_head.setOnClickListener(onClickListener);
+        holder.rlt.setOnClickListener(onClickListener);
+        holder.btn_follow.setOnClickListener(onClickListener);
         return convertView;
     }
 
     class ViewHolder{
         CircleImageView img_head;
+        RelativeLayout rlt;
         TextView tv_name;
         TextView tv_sign;
         Button btn_follow;
@@ -198,7 +208,7 @@ public class PersonListAdapter extends BaseAdapter {
                     Toast.makeText(context, changeTask.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    notifyDataSetChanged();
+//                    notifyDataSetChanged();
                 }
             }
         }

@@ -11,6 +11,15 @@
         android:background="@color/gray"
         >
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/img_word"
+            android:scaleType="centerInside"
+            android:padding="10dp"
+            android:src="@drawable/notification_comment_icon"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

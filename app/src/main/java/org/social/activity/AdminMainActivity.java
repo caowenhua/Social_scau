@@ -30,6 +30,7 @@ public class AdminMainActivity extends BaseActivity implements View.OnClickListe
 
     private TextView tv_name;
     private ImageView img_setting;
+    private ImageView img_word;
     private CircleImageView img_head;
     private EditText edt_search;
     private ListView lv_result;
@@ -47,6 +48,7 @@ public class AdminMainActivity extends BaseActivity implements View.OnClickListe
     protected void findView() {
         tv_name = findViewByID(R.id.tv_name);
         img_head = findViewByID(R.id.img_head);
+        img_word = findViewByID(R.id.img_word);
         img_setting = findViewByID(R.id.img_setting);
         edt_search = findViewByID(R.id.edt_search);
         lv_result = findViewByID(R.id.lv_result);
@@ -56,6 +58,7 @@ public class AdminMainActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initData(Bundle savedInstanceState) {
         img_setting.setOnClickListener(this);
+        img_word.setOnClickListener(this);
         userListList = new ArrayList<>();
         adapter = new AdminListAdapter(this, userListList, new OnListDataChangeListener() {
             @Override
@@ -110,6 +113,9 @@ public class AdminMainActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == img_setting){
             startActivity(SettingActivity.class, null, 0);
+        }
+        else if(v == img_word){
+            startActivity(GagActivity.class, null, 0);
         }
     }
 

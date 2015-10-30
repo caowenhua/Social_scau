@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/selector_bg_f9_2_e5"
+    android:id="@+id/rlt"
     android:padding="10dp"
     >
     <org.social.widget.CircleImageView
@@ -15,16 +16,15 @@
         />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
         android:id="@+id/btn_follow"
         android:layout_alignParentRight="true"
-        android:padding="10dp"
         android:background="@drawable/selector_bg_main_con"
-        android:textSize="@dimen/text"
+        android:textSize="@dimen/text_s"
         android:textColor="@color/white"
-        android:text="follow"
         android:layout_centerVertical="true"
+        android:gravity="center"
         />
 
     <TextView
@@ -35,23 +35,25 @@
         android:textColor="@color/text"
         android:singleLine="true"
         android:ellipsize="end"
-        android:text="name"
         android:layout_toRightOf="@+id/img_head"
+        android:layout_toLeftOf="@+id/btn_follow"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_sign"
-        android:textSize="@dimen/text"
+        android:textSize="@dimen/text_s"
         android:textColor="@color/text"
         android:singleLine="true"
         android:ellipsize="end"
-        android:text="signnnnnn"
         android:layout_toRightOf="@+id/img_head"
+        android:layout_toLeftOf="@+id/btn_follow"
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/tv_name"
+        android:layout_marginRight="5dp"
         />
 
 </RelativeLayout>

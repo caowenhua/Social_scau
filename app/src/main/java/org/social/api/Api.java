@@ -17,11 +17,8 @@ import org.social.response.SignInResponse;
 import org.social.response.UserInfoResponse;
 import org.social.response.UserListResponse;
 import org.social.util.JsonUtils;
+import org.social.util.SpUtil;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -30,12 +27,13 @@ import java.util.ArrayList;
 public class Api {
     public static String IP = "http://192.168.123.1:8080";
     private Context context;
-    private String host = "http://192.168.123.1:8080/Share/";
+    private String host = IP + "/Share/";
     private HttpClient client;
 
     public Api(Context context) {
         client = new HttpClient();
         this.context = context;
+        IP = SpUtil.getIp(context);
     }
 
     public static enum Method {
@@ -94,7 +92,6 @@ public class Api {
         return response;
     }
 
-    //msg:userid
     public SignInResponse login(String userName, String password){
         String url = host + "user/login";
         ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
@@ -127,7 +124,7 @@ public class Api {
     }
 
     public AllShareResponse getSharesByUserId(int userId){
-        String url = host + "user/getSharesByUserId";
+        String url = host + "share/getSharesByUserId";
         ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
         params.add(new BasicNameValuePair("userId", userId + ""));
         BaseResponse response = request(Method.post, url, params,
@@ -291,20 +288,12 @@ public class Api {
         return response;
     }
 
-
-    private static String readFileContent(String fileName) throws IOException {
-        File file = new File(fileName);
-        BufferedReader bf = new BufferedReader(new FileReader(file));
-        String content = "";
-        StringBuilder sb = new StringBuilder();
-        while(content != null){
-            content = bf.readLine();
-            if(content == null){
-                break;
-            }
-            sb.append(content.trim());
-        }
-        bf.close();
-        return sb.toString();
+    public AllShareResponse getCollectByUserId(int userId){
+        String url = host + "share/getcollects";
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("userId", userId + ""));
+        BaseResponse response = request(Method.post, url, params,
+                AllShareResponse.class);
+        return (AllShareResponse) response;
     }
 }

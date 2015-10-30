@@ -33,13 +33,13 @@
         />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
         android:id="@+id/btn_follow"
         android:layout_alignParentRight="true"
         android:padding="10dp"
         android:background="@drawable/selector_bg_main_con"
-        android:textSize="@dimen/text"
+        android:textSize="@dimen/text_s"
         android:textColor="@color/white"
         android:layout_below="@+id/titlebar"
         android:layout_marginTop="40dp"
@@ -114,7 +114,7 @@
         android:id="@+id/tv_sign"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:singleLine="true"
         android:ellipsize="end"
@@ -144,6 +144,7 @@
         android:ellipsize="end"
         android:layout_centerHorizontal="true"
         android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         />
 
     <RelativeLayout
@@ -175,6 +176,36 @@
             />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_below="@+id/rlt_new"
+        android:background="@drawable/selector_bg_f9_2_e5"
+        android:visibility="gone"
+        android:id="@+id/rlt_collect"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text"
+            android:textColor="@color/text_deep"
+            android:singleLine="true"
+            android:text="我的收藏"
+            android:layout_marginTop="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -187,6 +218,13 @@
         android:layout_height="1px"
         android:background="@color/text_shadow"
         android:layout_below="@+id/rlt_new"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/text_shadow"
+        android:layout_below="@+id/rlt_collect"
         />
 
 </RelativeLayout>

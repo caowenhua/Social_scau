@@ -67,4 +67,16 @@ public class SpUtil {
         editor.remove("isRejectShared");
         editor.commit();
     }
+
+    public static String getIp(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("params", Context.MODE_PRIVATE);
+        return preferences.getString("ip", "http://192.168.123.1:8080");
+    }
+
+    public static void setIp(Context context, String ip){
+        SharedPreferences preferences = context.getSharedPreferences("params", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("ip", ip);
+        editor.commit();
+    }
 }

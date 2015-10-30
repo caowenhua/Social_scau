@@ -55,7 +55,7 @@
             android:background="@color/background"
             android:id="@+id/lv_list"
             android:dividerHeight="20dp"
-            android:divider="@color/col_e5"
+            android:divider="@color/background"
             />
 
     </org.social.widget.PullToRefreshView>

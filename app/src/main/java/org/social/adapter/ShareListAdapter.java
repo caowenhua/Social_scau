@@ -92,6 +92,12 @@ public class ShareListAdapter extends BaseAdapter {
                 }
                 else if(v == finalHolder.rlt_like){
                     list.get(position).setIsLike(!list.get(position).isLike());
+                    if(list.get(position).isLike()){
+                        list.get(position).setLikeCount(list.get(position).getLikeCount()+1);
+                    }
+                    else{
+                        list.get(position).setLikeCount(list.get(position).getLikeCount()-1);
+                    }
                     LikeTask task = new LikeTask(SpUtil.getUserId(context), list.get(position).getShareId(),
                             list.get(position).isLike(), position);
                     task.setListener(taskListener);
@@ -243,6 +249,12 @@ public class ShareListAdapter extends BaseAdapter {
                 if(!LikeTask.getResponse().getStatus().equals("success")){
                     list.get(LikeTask.getPosition()).
                             setIsLike(!list.get(LikeTask.getPosition()).isLike());
+                    if(!list.get(LikeTask.getPosition()).isLike()){
+                        list.get(LikeTask.getPosition()).setLikeCount(list.get(LikeTask.getPosition()).getLikeCount()+1);
+                    }
+                    else{
+                        list.get(LikeTask.getPosition()).setLikeCount(list.get(LikeTask.getPosition()).getLikeCount()-1);
+                    }
                     notifyDataSetChanged();
                     Toast.makeText(context, LikeTask.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
                 }
