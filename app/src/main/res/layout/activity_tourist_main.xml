@@ -20,6 +20,7 @@
             android:src="@drawable/notification_people_icon"
             />
 
+        <!--
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -28,6 +29,7 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/btn_search"
             />
+            -->
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,11 +46,66 @@
     </RelativeLayout>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlt"
+        android:orientation="horizontal"
+        android:background="@color/yellow"
+        android:id="@+id/llt"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:textSize="@dimen/text"
+            android:textColor="@color/white"
+            android:text="点赞最多"
+            android:gravity="center"
+            android:id="@+id/tv_like"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:textSize="@dimen/text"
+            android:textColor="@color/white"
+            android:text="评论最多"
+            android:gravity="center"
+            android:id="@+id/tv_comment"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:textSize="@dimen/text"
+            android:textColor="@color/white"
+            android:text="最新发布"
+            android:gravity="center"
+            android:id="@+id/tv_new"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="5dp"
+        android:background="@color/white"
+        android:layout_alignBottom="@+id/llt"
+        android:id="@+id/v_moving"
+        />
+
     <org.social.widget.PullToRefreshView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/v_pull"
-        android:layout_below="@+id/rlt">
+        android:layout_below="@+id/llt">
 
         <ListView
             android:layout_width="match_parent"
@@ -61,7 +118,13 @@
 
     </org.social.widget.PullToRefreshView>
 
-
-
-
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/pb_loading"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/llt"
+        android:layout_marginTop="120dp"
+        android:visibility="gone"
+        />
 </RelativeLayout>

@@ -162,6 +162,12 @@ public class GroundActivity extends BaseActivity {
     }
 
     private void startAllTask() {
+        newResponse = null;
+        likeResponse = null;
+        commentResponse = null;
+        startNewTask();
+        startLikeTask();
+        startCommentTask();
     }
 
     @OnClick({R.id.img_back, R.id.tv_like, R.id.tv_comment, R.id.tv_new})

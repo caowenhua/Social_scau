@@ -110,10 +110,12 @@ public class ShareListAdapter extends BaseAdapter {
                 }
             }
         };
-        holder.img_head.setOnClickListener(onClickListener);
-        holder.rlt_comment.setOnClickListener(onClickListener);
-        holder.rlt_like.setOnClickListener(onClickListener);
-        holder.rlt_share.setOnClickListener(onClickListener);
+        if(SpUtil.getUserId(context) != -1){
+            holder.img_head.setOnClickListener(onClickListener);
+            holder.rlt_comment.setOnClickListener(onClickListener);
+            holder.rlt_like.setOnClickListener(onClickListener);
+            holder.rlt_share.setOnClickListener(onClickListener);
+        }
 
         holder.grid_nine.setOnNineGridClickListener(new OnNineGridClickListener() {
             @Override

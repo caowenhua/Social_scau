@@ -92,7 +92,7 @@ public class AdminMainActivity extends BaseActivity implements View.OnClickListe
                     if(userListResponse != null){
                         userListList.clear();
                         for (int i=0 ; i<userListResponse.getUserList().size() ;i++){
-                            if(userListResponse.getUserList().get(i).getNickname().equals(s.toString())){
+                            if(userListResponse.getUserList().get(i).getNickname().contains(s.toString())){
                                 userListList.add(userListResponse.getUserList().get(i));
                             }
                         }

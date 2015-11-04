@@ -6,6 +6,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import org.social.api.Api;
+import org.social.base.BaseTask;
+import org.social.base.TaskListener;
+import org.social.response.BaseResponse;
+import org.social.response.GagEntity;
+import org.social.widget.dialog.LoadingDialog;
 import org.social.widget.listener.OnEventEndListener;
 import org.social.widget.photoview.ItemGag;
 
@@ -17,11 +23,14 @@ import java.util.List;
  */
 public class GagAdapter extends BaseAdapter{
 
-    private List<String> list;
+    private List<GagEntity> list;
     private Context context;
     private List<OnEventEndListener> listeners;
 
-    public GagAdapter(Context context, List<String> list) {
+    private int id;
+    private int positio;
+
+    public GagAdapter(Context context, List<GagEntity> list) {
         this.context = context;
         this.list = list;
         listeners = new ArrayList<>();
@@ -55,11 +64,13 @@ public class GagAdapter extends BaseAdapter{
             gag = (ItemGag) convertView.getTag();
             gag.resetPostion();
         }
-        gag.setText(list.get(position));
+        gag.setText(list.get(position).getKeyWord());
         gag.setBtnOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "posution" + position, Toast.LENGTH_SHORT).show();
+                positio = position;
+                id = list.get(position).getId();
+                startTask();
             }
         });
         return convertView;
@@ -71,4 +82,50 @@ public class GagAdapter extends BaseAdapter{
             listeners.get(i).onEventEnd();
         }
     }
+
+    private void startTask(){
+        GagTask task = new GagTask();
+        task.setListener(taskListener);
+        task.execute();
+    }
+
+    private LoadingDialog loadingDialog;
+    private BaseResponse shutResponse;
+    private class GagTask extends BaseTask{
+        @Override
+        protected Object doWorkInBackground(Object... params) {
+            Api api = new Api(context);
+            shutResponse = api.deleteKeyWord(id);
+            return null;
+        }
+    }
+
+    private TaskListener taskListener = new TaskListener() {
+        @Override
+        public void onPreExecute(BaseTask task) {
+            loadingDialog = new LoadingDialog(context, "正在删除..");
+        }
+
+        @Override
+        public void onPostExecute(BaseTask task, Object result) {
+            loadingDialog.dismiss();
+            if(shutResponse.getStatus().equals("success")){
+                list.remove(positio);
+                notifyDataSetChanged();
+            }
+            else{
+                Toast.makeText(context, shutResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onProgressUpdate(BaseTask task, Object param) {
+
+        }
+
+        @Override
+        public void onCancelled(BaseTask task) {
+
+        }
+    };
 }

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.social.R;
+import org.social.api.Api;
 import org.social.application.SysApplication;
 import org.social.base.BaseActivity;
 import org.social.util.SpUtil;
@@ -67,6 +68,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                             public void onFinish(String content) {
                                 SpUtil.setIp(getThis(), content);
                                 tv_ip.setText(content);
+                                Api.IP = SpUtil.getIp(getThis());
                             }
                         });
                 break;

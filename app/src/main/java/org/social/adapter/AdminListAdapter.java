@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -19,7 +18,6 @@ import org.social.base.BaseTask;
 import org.social.base.TaskListener;
 import org.social.response.BaseResponse;
 import org.social.response.UserListResponse;
-import org.social.util.SpUtil;
 import org.social.widget.CircleImageView;
 
 import java.util.List;
@@ -71,10 +69,10 @@ public class AdminListAdapter extends BaseAdapter {
         }
         holder.tv_name.setText(userListList.get(position).getNickname());
         if(userListList.get(position).isShare()){
-            holder.btn_shut.setText("normal");
+            holder.btn_shut.setText("禁言");
         }
         else{
-            holder.btn_shut.setText("silence");
+            holder.btn_shut.setText("解除");
         }
         ImageLoader.getInstance().displayImage(Api.IP+userListList.get(position).getAvatar(), holder.img_head);
         final ViewHolder finalHolder = holder;
@@ -99,6 +97,7 @@ public class AdminListAdapter extends BaseAdapter {
                 }
             }
         };
+        holder.btn_shut.setOnClickListener(onClickListener);
         holder.img_head.setOnClickListener(onClickListener);
         return convertView;
     }
@@ -125,8 +124,7 @@ public class AdminListAdapter extends BaseAdapter {
         @Override
         protected Object doWorkInBackground(Object... params) {
             Api api = new Api(context);
-            response = api.shieldUser(userListList.get(position).getUserId(), SpUtil.getUserId(context),
-                    userListList.get(position).isShare());
+            response = api.shutUp(userListList.get(position).getUserId(), userListList.get(position).isShare());
             return null;
         }
     }
@@ -149,9 +147,6 @@ public class AdminListAdapter extends BaseAdapter {
                                 userListList.get(changeTask.getPosition()).getIsShare());
                     }
                     notifyDataSetChanged();
-                }
-                else{
-                    Toast.makeText(context, changeTask.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }

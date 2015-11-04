@@ -6,26 +6,19 @@
     <org.social.widget.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:center_text="关于我们"
+        app:center_text="禁言系统"
         app:right_text="添加"
         android:id="@+id/titlebar"
         />
-
-    <org.social.widget.PullToRefreshView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/v_pull"
-        android:layout_below="@+id/titlebar">
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background"
+            android:layout_below="@+id/titlebar"
             android:id="@+id/lv_list"
             android:dividerHeight="1px"
             android:divider="@color/background"
             />
-
-    </org.social.widget.PullToRefreshView>
 
 </RelativeLayout>

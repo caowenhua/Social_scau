@@ -2,7 +2,6 @@ package org.social.widget.photoview;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -51,7 +50,6 @@ public class ItemGag extends RelativeLayout implements View.OnClickListener{
     public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                Log.e("downnnnnnn", event.getX() + "  ");
                 downX = event.getX();
                 tv_text.animate().cancel();
                 break;
@@ -75,7 +73,6 @@ public class ItemGag extends RelativeLayout implements View.OnClickListener{
 //                }
                 break;
             case MotionEvent.ACTION_UP:
-                Log.e("ippppp", downX + "  " + tv_text.getX() + "  " + btnWidth);
                 upEvent();
                 break;
         }

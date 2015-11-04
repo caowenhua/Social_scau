@@ -19,7 +19,6 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void findView() {
-
     }
 
     @Override

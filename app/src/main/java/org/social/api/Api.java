@@ -7,10 +7,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.social.http.HttpClient;
 import org.social.http.HttpException;
 import org.social.http.Response;
+import org.social.response.AdminListResponse;
 import org.social.response.AllShareResponse;
 import org.social.response.BaseResponse;
 import org.social.response.FanListResponse;
 import org.social.response.FollowListResponse;
+import org.social.response.GagResponse;
 import org.social.response.ShareDetailResponse;
 import org.social.response.ShareGroundResponse;
 import org.social.response.SignInResponse;
@@ -295,5 +297,47 @@ public class Api {
         BaseResponse response = request(Method.post, url, params,
                 AllShareResponse.class);
         return (AllShareResponse) response;
+    }
+
+    public BaseResponse addKeyWord(String keyWord){
+        String url = host + "admin/addKeyWord";
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("keyWord", keyWord));
+        BaseResponse response = request(Method.post, url, params,
+                BaseResponse.class);
+        return response;
+    }
+
+    public GagResponse queryKeyWord(){
+        String url = host + "admin/queryKeyWord";
+        BaseResponse response = request(Method.get, url, null,
+                GagResponse.class);
+        return (GagResponse) response;
+    }
+
+    public BaseResponse deleteKeyWord(int id){
+        String url = host + "admin/deleteKeyWord";
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("id", id+""));
+        BaseResponse response = request(Method.post, url, params,
+                BaseResponse.class);
+        return response;
+    }
+
+    public BaseResponse shutUp(int userId, boolean canShare){
+        String url = host + "admin/shutUp";
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("userId", userId+ ""));
+        params.add(new BasicNameValuePair("canShare", canShare+ ""));
+        BaseResponse response = request(Method.post, url, params,
+                BaseResponse.class);
+        return response;
+    }
+
+    public AdminListResponse queryShutUp(){
+        String url = host + "admin/queryShutUp";
+        BaseResponse response = request(Method.get, url, null,
+                AdminListResponse.class);
+        return (AdminListResponse) response;
     }
 }

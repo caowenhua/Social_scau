@@ -165,7 +165,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 if(loginResponse.getStatus().equals("success")){
                     if(loginResponse.getUserId() == 0){
                         SpUtil.setIsAdmin(getThis(), true);
-                        startActivity(TouristMainActivity.class, null, 0);
+                        startActivity(AdminMainActivity.class, null, 0);
                         SysApplication.getInstance().cleanBottom();
                         finish();
                     }
