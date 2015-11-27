@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * Created by caowenhua on 2015/10/12.
  */
 public class Api {
-    public static String IP = "http://192.168.123.1:8080";
+    public static String IP = "http://192.168.0.1:8080";
     private Context context;
     private String host = IP + "/Share/";
     private HttpClient client;

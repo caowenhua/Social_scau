@@ -39,6 +39,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
     private TextView tv_phone;
     private RelativeLayout rlt_new;
     private RelativeLayout rlt_collect;
+    private RelativeLayout rlt_change;
     private LoadingDialog loadingDialog;
     private Button btn_follow;
 
@@ -62,6 +63,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
         tv_mail = findViewByID(R.id.tv_mail);
         rlt_new = findViewByID(R.id.rlt_new);
         rlt_collect = findViewByID(R.id.rlt_collect);
+        rlt_change = findViewByID(R.id.rlt_change);
         btn_follow = findViewByID(R.id.btn_follow);
     }
 
@@ -105,6 +107,9 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
                 break;
             case R.id.rlt_collect:
                 startActivity(CollectionListActivity.class, null, 0);
+                break;
+            case R.id.rlt_change:
+                startActivity(ChangePasswordActivity.class, null, 0);
                 break;
             case R.id.tv_focus:
                 if(userInfoResponse != null) {
@@ -214,6 +219,8 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener{
                     else{
                         rlt_collect.setVisibility(View.VISIBLE);
                         rlt_collect.setOnClickListener(UserInfoActivity.this);
+                        rlt_change.setVisibility(View.VISIBLE);
+                        rlt_change.setOnClickListener(UserInfoActivity.this);
                     }
                 }
                 else{

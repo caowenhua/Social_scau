@@ -21,6 +21,8 @@ import org.social.response.SharesEntity;
 import org.social.util.ExplosionUtils;
 import org.social.util.SpUtil;
 import org.social.widget.PullToRefreshView;
+import org.social.widget.dialog.EditDialog;
+import org.social.widget.listener.OnEditFinishListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ import java.util.List;
 public class TouristMainActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView img_login;
+    private ImageView img_setting;
     private ListView lv_list;
     private PullToRefreshView v_pull;
     private ProgressBar pb_loading;
@@ -55,6 +58,7 @@ public class TouristMainActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void findView() {
         img_login = findViewByID(R.id.img_login);
+        img_setting = findViewByID(R.id.img_setting);
         lv_list = findViewByID(R.id.lv_list);
         v_pull = findViewByID(R.id.v_pull);
         v_moving = findViewByID(R.id.v_moving);
@@ -74,6 +78,7 @@ public class TouristMainActivity extends BaseActivity implements View.OnClickLis
         type = 0;
 
         img_login.setOnClickListener(this);
+        img_setting.setOnClickListener(this);
         tv_comment.setOnClickListener(this);
         tv_like.setOnClickListener(this);
         tv_new.setOnClickListener(this);
@@ -117,6 +122,16 @@ public class TouristMainActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_new:
                 startNewTask();
+                break;
+            case R.id.img_setting:
+                EditDialog editDialog = new EditDialog(getThis(), "修改IP", Api.IP, "取消",
+                    "确定", null, new OnEditFinishListener() {
+                @Override
+                public void onFinish(String content) {
+                    SpUtil.setIp(getThis(), content);
+                    Api.IP = SpUtil.getIp(getThis());
+                }
+            });
                 break;
         }
     }

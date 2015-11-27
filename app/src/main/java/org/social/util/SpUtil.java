@@ -70,7 +70,7 @@ public class SpUtil {
 
     public static String getIp(Context context){
         SharedPreferences preferences = context.getSharedPreferences("params", Context.MODE_PRIVATE);
-        return preferences.getString("ip", "http://192.168.123.1:8080");
+        return preferences.getString("ip", "http://192.168.0.1:8080");
     }
 
     public static void setIp(Context context, String ip){
